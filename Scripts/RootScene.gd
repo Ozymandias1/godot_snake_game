@@ -16,10 +16,16 @@ func _on_title_on_exit_btn_pressed() -> void:
 #endregion
 
 #region PlayerSetup 화면
+# PlayerSetup-Back 버튼 클릭
 func _on_player_setup_on_btn_back_pressed() -> void:
 	title.show()
 	player_setup.hide()
 
-func _on_player_setup_on_btn_next_pressed(player_name: String, face_color: Color, outline_color: Color, eye_color: Color) -> void:
+# PlayerSetup-Create 버튼 클릭
+func _on_player_setup_on_btn_create_pressed(player_name: String, face_color: Color, outline_color: Color, eye_color: Color) -> void:
+	pass # Replace with function body.
+
+# PlayerSetup-Join 버튼 클릭
+func _on_player_setup_on_btn_join_pressed(player_name: String, face_color: Color, outline_color: Color, eye_color: Color) -> void:
 	pass # Replace with function body.
 #endregion

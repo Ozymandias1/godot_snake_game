@@ -14,6 +14,16 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_chfwy")
 
+[node name="BtnBack" type="Button" parent="."]
+custom_minimum_size = Vector2(150, 70)
+layout_mode = 1
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 160.0
+offset_bottom = 80.0
+theme_override_font_sizes/font_size = 30
+text = "Back"
+
 [node name="Container" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
@@ -182,19 +192,20 @@ layout_mode = 2
 theme_override_constants/separation = 50
 alignment = 1
 
-[node name="BtnBack" type="Button" parent="Container/ButtonContainer"]
+[node name="BtnCreate" type="Button" parent="Container/ButtonContainer"]
 custom_minimum_size = Vector2(150, 70)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
-text = "Back"
+text = "Create"
 
-[node name="BtnNext" type="Button" parent="Container/ButtonContainer"]
+[node name="BtnJoin" type="Button" parent="Container/ButtonContainer"]
 custom_minimum_size = Vector2(150, 70)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
-text = "Next"
+text = "Join"
 
+[connection signal="pressed" from="BtnBack" to="." method="_on_btn_back_pressed"]
 [connection signal="color_changed" from="Container/HeadColorDisplayContainer/ColorPickerContainer/ColorPicker" to="." method="_on_color_picker_color_changed"]
 [connection signal="pressed" from="Container/SelectPartContainer/BtnRandomColor" to="." method="_on_btn_random_color_pressed"]
-[connection signal="pressed" from="Container/ButtonContainer/BtnBack" to="." method="_on_btn_back_pressed"]
-[connection signal="pressed" from="Container/ButtonContainer/BtnNext" to="." method="_on_btn_next_pressed"]
+[connection signal="pressed" from="Container/ButtonContainer/BtnCreate" to="." method="_on_btn_create_pressed"]
+[connection signal="pressed" from="Container/ButtonContainer/BtnJoin" to="." method="_on_btn_join_pressed"]

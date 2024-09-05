@@ -25,4 +25,5 @@ layout_mode = 1
 [connection signal="on_exit_btn_pressed" from="UI/Title" to="." method="_on_title_on_exit_btn_pressed"]
 [connection signal="on_start_game_btn_pressed" from="UI/Title" to="." method="_on_title_on_start_game_btn_pressed"]
 [connection signal="on_btn_back_pressed" from="UI/PlayerSetup" to="." method="_on_player_setup_on_btn_back_pressed"]
-[connection signal="on_btn_next_pressed" from="UI/PlayerSetup" to="." method="_on_player_setup_on_btn_next_pressed"]
+[connection signal="on_btn_create_pressed" from="UI/PlayerSetup" to="." method="_on_player_setup_on_btn_create_pressed"]
+[connection signal="on_btn_join_pressed" from="UI/PlayerSetup" to="." method="_on_player_setup_on_btn_join_pressed"]

@@ -16,7 +16,8 @@ extends Control
 @onready var player_name: LineEdit = $Container/PlayerNameContainer/PlayerName
 
 # 버튼 시그널
-signal on_btn_next_pressed(player_name: String, face_color: Color, outline_color: Color, eye_color: Color)
+signal on_btn_create_pressed(player_name: String, face_color: Color, outline_color: Color, eye_color: Color)
+signal on_btn_join_pressed(player_name: String, face_color: Color, outline_color: Color, eye_color: Color)
 signal on_btn_back_pressed
 
 # ColorPicker 값 변경시 처리를 위한 변수
@@ -74,10 +75,22 @@ func _on_btn_random_color_pressed() -> void:
 	# ColorPicker 색상 설정
 	self.color_picker.color = self.selected_color_rect.modulate
 
-# Back버튼 클릭 시그널
+# Back 버튼 클릭 시그널
 func _on_btn_back_pressed() -> void:
-	on_btn_back_pressed.emit()
+	self.on_btn_back_pressed.emit()
 
-# Next버튼 클릭 시그널
-func _on_btn_next_pressed() -> void:
-	on_btn_next_pressed.emit(player_name.text, face.modulate, outline.modulate, eye.modulate)
+# Create 버튼 클릭 시그널
+func _on_btn_create_pressed() -> void:
+	if self.player_name.text.is_empty():
+		OS.alert("Invalid Player Name.")
+		return
+		
+	self.on_btn_create_pressed.emit(self.player_name.text, self.face.modulate, self.outline.modulate, self.eye.modulate)
+
+# Join 버튼 클릭 시그널
+func _on_btn_join_pressed() -> void:
+	if self.player_name.text.is_empty():
+		OS.alert("Invalid Player Name.")
+		return
+		
+	self.on_btn_join_pressed.emit(self.player_name.text, self.face.modulate, self.outline.modulate, self.eye.modulate)
