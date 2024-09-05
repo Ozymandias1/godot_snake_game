@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dy8fyk5jra6k8"]
+[gd_scene load_steps=4 format=3 uid="uid://dy8fyk5jra6k8"]
 
 [ext_resource type="PackedScene" uid="uid://dv872npqj6t43" path="res://Scenes/Title.tscn" id="1_7ivgv"]
 [ext_resource type="Script" path="res://Scripts/RootScene.gd" id="1_r0ne1"]
+[ext_resource type="PackedScene" uid="uid://deula55xlbthr" path="res://Scenes/PlayerSetup.tscn" id="3_l7g61"]
 
 [node name="RootScene" type="Node"]
 script = ExtResource("1_r0ne1")
@@ -17,5 +18,11 @@ grow_vertical = 2
 [node name="Title" parent="UI" instance=ExtResource("1_7ivgv")]
 layout_mode = 1
 
+[node name="PlayerSetup" parent="UI" instance=ExtResource("3_l7g61")]
+visible = false
+layout_mode = 1
+
 [connection signal="on_exit_btn_pressed" from="UI/Title" to="." method="_on_title_on_exit_btn_pressed"]
 [connection signal="on_start_game_btn_pressed" from="UI/Title" to="." method="_on_title_on_start_game_btn_pressed"]
+[connection signal="on_btn_back_pressed" from="UI/PlayerSetup" to="." method="_on_player_setup_on_btn_back_pressed"]
+[connection signal="on_btn_next_pressed" from="UI/PlayerSetup" to="." method="_on_player_setup_on_btn_next_pressed"]

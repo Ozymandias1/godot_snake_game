@@ -1,0 +1,200 @@
+[gd_scene load_steps=5 format=3 uid="uid://deula55xlbthr"]
+
+[ext_resource type="Script" path="res://Scripts/PlayerSetup.gd" id="1_chfwy"]
+[ext_resource type="Texture2D" uid="uid://b34c6yrpj3p8w" path="res://Textures/face.png" id="1_owaal"]
+[ext_resource type="Texture2D" uid="uid://d03wu8b0mi7rx" path="res://Textures/face_outline.png" id="2_tns4d"]
+[ext_resource type="Texture2D" uid="uid://cd0ts2gutcjrv" path="res://Textures/face_eye.png" id="3_y83jn"]
+
+[node name="PlayerSetup" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_chfwy")
+
+[node name="Container" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 100
+text = "Player Setup"
+horizontal_alignment = 1
+
+[node name="HeadColorDisplayContainer" type="Control" parent="Container"]
+custom_minimum_size = Vector2(0, 450)
+layout_mode = 2
+
+[node name="Face" type="TextureRect" parent="Container/HeadColorDisplayContainer"]
+modulate = Color(0.278431, 0.54902, 0.74902, 1)
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -128.0
+offset_right = 256.0
+offset_bottom = 128.0
+grow_vertical = 2
+texture = ExtResource("1_owaal")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Outline" type="TextureRect" parent="Container/HeadColorDisplayContainer"]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -128.0
+offset_right = 256.0
+offset_bottom = 128.0
+grow_vertical = 2
+texture = ExtResource("2_tns4d")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Eye" type="TextureRect" parent="Container/HeadColorDisplayContainer"]
+modulate = Color(0, 0, 0, 1)
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -128.0
+offset_right = 256.0
+offset_bottom = 128.0
+grow_vertical = 2
+texture = ExtResource("3_y83jn")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ColorPickerContainer" type="VBoxContainer" parent="Container/HeadColorDisplayContainer"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -264.0
+offset_top = -202.5
+offset_bottom = 202.5
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="ColorPickerTitle" type="Label" parent="Container/HeadColorDisplayContainer/ColorPickerContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "ColorPickerTitle"
+horizontal_alignment = 1
+
+[node name="ColorPicker" type="ColorPicker" parent="Container/HeadColorDisplayContainer/ColorPickerContainer"]
+layout_mode = 2
+edit_alpha = false
+picker_shape = 1
+sampler_visible = false
+color_modes_visible = false
+hex_visible = false
+presets_visible = false
+
+[node name="SelectPartContainer" type="HBoxContainer" parent="Container"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="FaceContainer" type="HBoxContainer" parent="Container/SelectPartContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Container/SelectPartContainer/FaceContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Face:"
+
+[node name="FaceColorRect" type="ColorRect" parent="Container/SelectPartContainer/FaceContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+metadata/display_text = "Face Color"
+
+[node name="OutlineContainer" type="HBoxContainer" parent="Container/SelectPartContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Container/SelectPartContainer/OutlineContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Outline:"
+
+[node name="OutlineColorRect" type="ColorRect" parent="Container/SelectPartContainer/OutlineContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+metadata/display_text = "Outline Color"
+
+[node name="EyeContainer" type="HBoxContainer" parent="Container/SelectPartContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Container/SelectPartContainer/EyeContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Eye:"
+
+[node name="EyeColorRect" type="ColorRect" parent="Container/SelectPartContainer/EyeContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+metadata/display_text = "Eye Color"
+
+[node name="BtnRandomColor" type="Button" parent="Container/SelectPartContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Random Color"
+
+[node name="PlayerNameContainer" type="HBoxContainer" parent="Container"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Container/PlayerNameContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Player Name: "
+
+[node name="PlayerName" type="LineEdit" parent="Container/PlayerNameContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+alignment = 1
+
+[node name="ButtonContainer" type="HBoxContainer" parent="Container"]
+layout_mode = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="BtnBack" type="Button" parent="Container/ButtonContainer"]
+custom_minimum_size = Vector2(150, 70)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Back"
+
+[node name="BtnNext" type="Button" parent="Container/ButtonContainer"]
+custom_minimum_size = Vector2(150, 70)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Next"
+
+[connection signal="color_changed" from="Container/HeadColorDisplayContainer/ColorPickerContainer/ColorPicker" to="." method="_on_color_picker_color_changed"]
+[connection signal="pressed" from="Container/SelectPartContainer/BtnRandomColor" to="." method="_on_btn_random_color_pressed"]
+[connection signal="pressed" from="Container/ButtonContainer/BtnBack" to="." method="_on_btn_back_pressed"]
+[connection signal="pressed" from="Container/ButtonContainer/BtnNext" to="." method="_on_btn_next_pressed"]
