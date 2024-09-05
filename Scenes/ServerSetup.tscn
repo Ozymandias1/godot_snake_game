@@ -1,0 +1,93 @@
+[gd_scene load_steps=2 format=3 uid="uid://d0xffw3a00yqe"]
+
+[ext_resource type="Script" path="res://Scripts/ServerSetup.gd" id="1_84fkf"]
+
+[node name="ServerSetup" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_84fkf")
+
+[node name="BtnBack" type="Button" parent="."]
+custom_minimum_size = Vector2(150, 70)
+layout_mode = 1
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 160.0
+offset_bottom = 80.0
+theme_override_font_sizes/font_size = 30
+text = "Back"
+
+[node name="Container" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -307.0
+offset_top = -250.5
+offset_right = 307.0
+offset_bottom = 250.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 70
+
+[node name="Title" type="Label" parent="Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 100
+text = "Server Setup"
+horizontal_alignment = 1
+
+[node name="ServerNameContainer" type="HBoxContainer" parent="Container"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Container/ServerNameContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Server Name:"
+horizontal_alignment = 2
+
+[node name="ServerName" type="LineEdit" parent="Container/ServerNameContainer"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "test server"
+alignment = 1
+
+[node name="PortContainer" type="HBoxContainer" parent="Container"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Container/PortContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Port Number:"
+horizontal_alignment = 2
+
+[node name="PortNumber" type="LineEdit" parent="Container/PortContainer"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "8080"
+alignment = 1
+
+[node name="ButtonContainer" type="HBoxContainer" parent="Container"]
+layout_mode = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="BtnCreate" type="Button" parent="Container/ButtonContainer"]
+custom_minimum_size = Vector2(150, 70)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Create"
+
+[connection signal="pressed" from="BtnBack" to="." method="_on_btn_back_pressed"]
+[connection signal="pressed" from="Container/ButtonContainer/BtnCreate" to="." method="_on_btn_create_pressed"]
