@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://q2ro1wac2ca4"]
+
+[node name="BrowserItem" type="HBoxContainer"]
+
+[node name="ServerName" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+text = "Server Name"
+horizontal_alignment = 1
+
+[node name="BtnJoin" type="Button" parent="."]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Join"

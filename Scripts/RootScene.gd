@@ -4,6 +4,7 @@ extends Node
 @onready var title: Control = $UI/Title
 @onready var player_setup: Control = $UI/PlayerSetup
 @onready var server_setup: Control = $UI/ServerSetup
+@onready var join_server: Control = $UI/JoinServer
 
 #region Title 화면
 # StartGame 버튼 클릭
@@ -29,7 +30,8 @@ func _on_player_setup_on_btn_create_pressed(player_name: String, face_color: Col
 
 # PlayerSetup-Join 버튼 클릭
 func _on_player_setup_on_btn_join_pressed(player_name: String, face_color: Color, outline_color: Color, eye_color: Color) -> void:
-	pass # Replace with function body.
+	self.player_setup.hide()
+	self.join_server.show()
 #endregion
 
 #region ServerSetup 화면
@@ -40,4 +42,10 @@ func _on_server_setup_btn_back_pressed() -> void:
 
 func _on_server_setup_btn_create_pressed(server_name: String, port: int) -> void:
 	print_debug("server_name, port -> [%s, %s]" % [server_name, port])
+#endregion
+
+#region JoinServer 화면
+func _on_join_server_on_btn_back_pressed() -> void:
+	self.player_setup.show()
+	self.join_server.hide()
 #endregion

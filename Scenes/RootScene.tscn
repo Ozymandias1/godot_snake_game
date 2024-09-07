@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dy8fyk5jra6k8"]
+[gd_scene load_steps=6 format=3 uid="uid://dy8fyk5jra6k8"]
 
 [ext_resource type="PackedScene" uid="uid://dv872npqj6t43" path="res://Scenes/Title.tscn" id="1_7ivgv"]
 [ext_resource type="Script" path="res://Scripts/RootScene.gd" id="1_r0ne1"]
 [ext_resource type="PackedScene" uid="uid://deula55xlbthr" path="res://Scenes/PlayerSetup.tscn" id="3_l7g61"]
 [ext_resource type="PackedScene" uid="uid://d0xffw3a00yqe" path="res://Scenes/ServerSetup.tscn" id="4_txrkp"]
+[ext_resource type="PackedScene" uid="uid://ddtpshcub0l6n" path="res://Scenes/JoinServer.tscn" id="5_d5w3x"]
 
 [node name="RootScene" type="Node"]
 script = ExtResource("1_r0ne1")
@@ -27,6 +28,10 @@ layout_mode = 1
 visible = false
 layout_mode = 1
 
+[node name="JoinServer" parent="UI" instance=ExtResource("5_d5w3x")]
+visible = false
+layout_mode = 1
+
 [connection signal="on_exit_btn_pressed" from="UI/Title" to="." method="_on_title_on_exit_btn_pressed"]
 [connection signal="on_start_game_btn_pressed" from="UI/Title" to="." method="_on_title_on_start_game_btn_pressed"]
 [connection signal="on_btn_back_pressed" from="UI/PlayerSetup" to="." method="_on_player_setup_on_btn_back_pressed"]
@@ -34,3 +39,4 @@ layout_mode = 1
 [connection signal="on_btn_join_pressed" from="UI/PlayerSetup" to="." method="_on_player_setup_on_btn_join_pressed"]
 [connection signal="on_btn_back_pressed" from="UI/ServerSetup" to="." method="_on_server_setup_btn_back_pressed"]
 [connection signal="on_btn_create_pressed" from="UI/ServerSetup" to="." method="_on_server_setup_btn_create_pressed"]
+[connection signal="on_btn_back_pressed" from="UI/JoinServer" to="." method="_on_join_server_on_btn_back_pressed"]
