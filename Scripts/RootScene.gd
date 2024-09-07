@@ -6,6 +6,8 @@ extends Node
 @onready var server_setup: Control = $UI/ServerSetup
 @onready var join_server: Control = $UI/JoinServer
 
+var my_player_data: Dictionary = {}
+
 #region Title 화면
 # StartGame 버튼 클릭
 func _on_title_on_start_game_btn_pressed() -> void:
@@ -25,11 +27,24 @@ func _on_player_setup_on_btn_back_pressed() -> void:
 
 # PlayerSetup-Create 버튼 클릭
 func _on_player_setup_on_btn_create_pressed(player_name: String, face_color: Color, outline_color: Color, eye_color: Color) -> void:
+	# 내 플레이어 데이터 설정
+	my_player_data["name"] = player_name
+	my_player_data["face"] = face_color
+	my_player_data["outline"] = outline_color
+	my_player_data["eye"] = eye_color
+	
+	# UI
 	self.player_setup.hide()
 	self.server_setup.show()
 
 # PlayerSetup-Join 버튼 클릭
 func _on_player_setup_on_btn_join_pressed(player_name: String, face_color: Color, outline_color: Color, eye_color: Color) -> void:
+	# 내 플레이어 데이터 설정
+	my_player_data["name"] = player_name
+	my_player_data["face"] = face_color
+	my_player_data["outline"] = outline_color
+	my_player_data["eye"] = eye_color
+	# UI
 	self.player_setup.hide()
 	self.join_server.show()
 #endregion
@@ -41,7 +56,7 @@ func _on_server_setup_btn_back_pressed() -> void:
 	self.server_setup.hide()
 
 func _on_server_setup_btn_create_pressed(server_name: String, port: int) -> void:
-	print_debug("server_name, port -> [%s, %s]" % [server_name, port])
+	NetworkManager.create_server(server_name, port, my_player_data)
 #endregion
 
 #region JoinServer 화면
