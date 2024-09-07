@@ -1,0 +1,2 @@
+# GameLevel.gd
+extends Node

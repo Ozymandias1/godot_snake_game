@@ -32,6 +32,12 @@ layout_mode = 1
 visible = false
 layout_mode = 1
 
+[node name="GameLevel" type="Node" parent="."]
+
+[node name="GameLevelSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Scenes/Templates/game_level.tscn")
+spawn_path = NodePath("../GameLevel")
+
 [connection signal="on_exit_btn_pressed" from="UI/Title" to="." method="_on_title_on_exit_btn_pressed"]
 [connection signal="on_start_game_btn_pressed" from="UI/Title" to="." method="_on_title_on_start_game_btn_pressed"]
 [connection signal="on_btn_back_pressed" from="UI/PlayerSetup" to="." method="_on_player_setup_on_btn_back_pressed"]

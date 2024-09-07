@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://drk5f5ngmiwx5"]
+
+[ext_resource type="Script" path="res://Scripts/GameLevel.gd" id="1_crwjw"]
+[ext_resource type="PackedScene" uid="uid://ie288gw0t40c" path="res://Scenes/Templates/screen_boundary.tscn" id="2_7atmv"]
+
+[node name="GameLevel" type="Node"]
+script = ExtResource("1_crwjw")
+
+[node name="ScreenBoundary" parent="." instance=ExtResource("2_7atmv")]
+
+[node name="ScreenBoundary2" parent="." instance=ExtResource("2_7atmv")]
+position = Vector2(800, 900)
+
+[node name="ScreenBoundary3" parent="." instance=ExtResource("2_7atmv")]
+position = Vector2(0, 450)
+direction = 1
+
+[node name="ScreenBoundary4" parent="." instance=ExtResource("2_7atmv")]
+position = Vector2(1600, 450)
+direction = 1
