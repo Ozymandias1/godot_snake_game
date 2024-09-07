@@ -13,10 +13,8 @@ func _ready() -> void:
 	# 스케일 조정
 	match(direction):
 		Direction.Horizontal:
-			print_debug("Direction.Horizontal")
 			self.scale.x = scale_ratio.x
 			return
 		Direction.Vertical:
-			print_debug("Direction.Vertical")
 			self.scale.y = scale_ratio.y
 			return

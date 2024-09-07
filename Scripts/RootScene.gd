@@ -5,6 +5,7 @@ extends Node
 @onready var player_setup: Control = $UI/PlayerSetup
 @onready var server_setup: Control = $UI/ServerSetup
 @onready var join_server: Control = $UI/JoinServer
+@onready var game_level_spawner: MultiplayerSpawner = $GameLevelSpawner
 
 var my_player_data: Dictionary = {}
 
@@ -56,7 +57,11 @@ func _on_server_setup_btn_back_pressed() -> void:
 	self.server_setup.hide()
 
 func _on_server_setup_btn_create_pressed(server_name: String, port: int) -> void:
+	# 서버생성
 	NetworkManager.create_server(server_name, port, my_player_data)
+	# 서버설정화면 숨기고 게임레벨 스폰
+	self.server_setup.hide()
+	game_level_spawner.spawn({})
 #endregion
 
 #region JoinServer 화면

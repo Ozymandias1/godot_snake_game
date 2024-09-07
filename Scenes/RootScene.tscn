@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://dy8fyk5jra6k8"]
+[gd_scene load_steps=7 format=3 uid="uid://dy8fyk5jra6k8"]
 
 [ext_resource type="PackedScene" uid="uid://dv872npqj6t43" path="res://Scenes/Title.tscn" id="1_7ivgv"]
 [ext_resource type="Script" path="res://Scripts/RootScene.gd" id="1_r0ne1"]
 [ext_resource type="PackedScene" uid="uid://deula55xlbthr" path="res://Scenes/PlayerSetup.tscn" id="3_l7g61"]
 [ext_resource type="PackedScene" uid="uid://d0xffw3a00yqe" path="res://Scenes/ServerSetup.tscn" id="4_txrkp"]
 [ext_resource type="PackedScene" uid="uid://ddtpshcub0l6n" path="res://Scenes/JoinServer.tscn" id="5_d5w3x"]
+[ext_resource type="Script" path="res://Scripts/GameLevelSpawner.gd" id="6_h6y2x"]
 
 [node name="RootScene" type="Node"]
 script = ExtResource("1_r0ne1")
@@ -37,6 +38,7 @@ layout_mode = 1
 [node name="GameLevelSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://Scenes/Templates/game_level.tscn")
 spawn_path = NodePath("../GameLevel")
+script = ExtResource("6_h6y2x")
 
 [connection signal="on_exit_btn_pressed" from="UI/Title" to="." method="_on_title_on_exit_btn_pressed"]
 [connection signal="on_start_game_btn_pressed" from="UI/Title" to="." method="_on_title_on_start_game_btn_pressed"]
