@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://cc2l7qw4e2q0n"]
+
+[ext_resource type="Texture2D" uid="uid://b34c6yrpj3p8w" path="res://Textures/face.png" id="1_eifjw"]
+[ext_resource type="Texture2D" uid="uid://cd0ts2gutcjrv" path="res://Textures/face_eye.png" id="2_ky4h1"]
+[ext_resource type="Texture2D" uid="uid://d03wu8b0mi7rx" path="res://Textures/face_outline.png" id="3_l0kde"]
+
+[node name="Player" type="Node"]
+
+[node name="Head" type="Node2D" parent="."]
+
+[node name="Face" type="Sprite2D" parent="Head"]
+scale = Vector2(0.035, 0.035)
+texture = ExtResource("1_eifjw")
+
+[node name="FaceEye" type="Sprite2D" parent="Head"]
+scale = Vector2(0.035, 0.035)
+texture = ExtResource("2_ky4h1")
+
+[node name="FaceOutline" type="Sprite2D" parent="Head"]
+scale = Vector2(0.035, 0.035)
+texture = ExtResource("3_l0kde")
+
+[node name="NameTag" type="Label" parent="."]
+offset_left = -47.5
+offset_top = -40.0
+offset_right = 47.5
+offset_bottom = -17.0
+text = "PlayerName"
