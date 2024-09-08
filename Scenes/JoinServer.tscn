@@ -152,3 +152,4 @@ theme_override_font_sizes/font_size = 30
 text = "Refresh"
 
 [connection signal="pressed" from="BtnBack" to="." method="_on_btn_back_pressed"]
+[connection signal="pressed" from="TabContainer/IP Address/Controls/BtnJoinIP" to="." method="_on_btn_join_ip_pressed"]

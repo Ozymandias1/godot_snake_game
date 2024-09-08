@@ -48,3 +48,4 @@ script = ExtResource("6_h6y2x")
 [connection signal="on_btn_back_pressed" from="UI/ServerSetup" to="." method="_on_server_setup_btn_back_pressed"]
 [connection signal="on_btn_create_pressed" from="UI/ServerSetup" to="." method="_on_server_setup_btn_create_pressed"]
 [connection signal="on_btn_back_pressed" from="UI/JoinServer" to="." method="_on_join_server_on_btn_back_pressed"]
+[connection signal="on_server_join_procced" from="UI/JoinServer" to="." method="_on_join_server_procced"]

@@ -65,7 +65,14 @@ func _on_server_setup_btn_create_pressed(server_name: String, port: int) -> void
 #endregion
 
 #region JoinServer 화면
+# JoinServer-Back 버튼 클릭
 func _on_join_server_on_btn_back_pressed() -> void:
 	self.player_setup.show()
 	self.join_server.hide()
+	
+# JoinServer 화면 서버 접속 시도
+func _on_join_server_procced(ip: String, port: int) -> void:
+	self.join_server.hide()
+	
+	NetworkManager.join_server(ip, port, my_player_data)
 #endregion
