@@ -10,6 +10,7 @@ func create_server(server_name: String, port: int, player_data: Dictionary) -> v
 		
 	multiplayer.multiplayer_peer = peer
 
+# 서버조인
 func join_server(ip: String, port: int, player_data: Dictionary) -> void:
 	var peer = ENetMultiplayerPeer.new()
 	var error = peer.create_client(ip, port)

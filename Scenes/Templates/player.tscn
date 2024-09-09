@@ -1,10 +1,26 @@
-[gd_scene load_steps=4 format=3 uid="uid://cc2l7qw4e2q0n"]
+[gd_scene load_steps=6 format=3 uid="uid://cc2l7qw4e2q0n"]
 
 [ext_resource type="Texture2D" uid="uid://b34c6yrpj3p8w" path="res://Textures/face.png" id="1_eifjw"]
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_sxmqb"]
 [ext_resource type="Texture2D" uid="uid://cd0ts2gutcjrv" path="res://Textures/face_eye.png" id="2_ky4h1"]
 [ext_resource type="Texture2D" uid="uid://d03wu8b0mi7rx" path="res://Textures/face_outline.png" id="3_l0kde"]
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_7jt5j"]
+properties/0/path = NodePath("Head:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("Head:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("Head:scale")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("NameTag:text")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+
 [node name="Player" type="Node"]
+script = ExtResource("1_sxmqb")
 
 [node name="Head" type="Node2D" parent="."]
 
@@ -26,3 +42,6 @@ offset_top = -40.0
 offset_right = 47.5
 offset_bottom = -17.0
 text = "PlayerName"
+
+[node name="PlayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_7jt5j")

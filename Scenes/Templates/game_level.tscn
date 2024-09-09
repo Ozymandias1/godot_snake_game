@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://drk5f5ngmiwx5"]
+[gd_scene load_steps=4 format=3 uid="uid://drk5f5ngmiwx5"]
 
 [ext_resource type="Script" path="res://Scripts/GameLevel.gd" id="1_crwjw"]
 [ext_resource type="PackedScene" uid="uid://ie288gw0t40c" path="res://Scenes/Templates/screen_boundary.tscn" id="2_7atmv"]
+[ext_resource type="Script" path="res://Scripts/PlayerSpawner.gd" id="3_7togj"]
 
 [node name="GameLevel" type="Node"]
 script = ExtResource("1_crwjw")
@@ -18,3 +19,10 @@ direction = 1
 [node name="ScreenBoundary4" parent="." instance=ExtResource("2_7atmv")]
 position = Vector2(1600, 450)
 direction = 1
+
+[node name="Players" type="Node" parent="."]
+
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Scenes/Templates/player.tscn")
+spawn_path = NodePath("../Players")
+script = ExtResource("3_7togj")
