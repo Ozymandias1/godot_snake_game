@@ -19,9 +19,12 @@ func _ready() -> void:
 # 플레이어 스폰 함수
 func _spawn_player(spawn_data: Dictionary) -> Node:
 	var peer_id: int = spawn_data["peer_id"]
-	
+	var player_data: Dictionary = spawn_data["player_data"]
+
 	var player = PLAYER_TEMPLATE.instantiate()
 	player.name = str(peer_id)
+	player.set_player_nametag_text(player_data["name"])
+	player.set_head_color(player_data["face"], player_data["outline"], player_data["eye"])
 	player.set_initial_position(initial_positions[players.get_child_count()])
-	
+
 	return player

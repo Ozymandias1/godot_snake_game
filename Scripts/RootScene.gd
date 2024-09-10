@@ -7,8 +7,6 @@ extends Node
 @onready var join_server: Control = $UI/JoinServer
 @onready var game_level_spawner: MultiplayerSpawner = $GameLevelSpawner
 
-var my_player_data: Dictionary = {}
-
 #region Title 화면
 # StartGame 버튼 클릭
 func _on_title_on_start_game_btn_pressed() -> void:
@@ -29,10 +27,10 @@ func _on_player_setup_on_btn_back_pressed() -> void:
 # PlayerSetup-Create 버튼 클릭
 func _on_player_setup_on_btn_create_pressed(player_name: String, face_color: Color, outline_color: Color, eye_color: Color) -> void:
 	# 내 플레이어 데이터 설정
-	my_player_data["name"] = player_name
-	my_player_data["face"] = face_color
-	my_player_data["outline"] = outline_color
-	my_player_data["eye"] = eye_color
+	NetworkManager.my_player_data["name"] = player_name
+	NetworkManager.my_player_data["face"] = face_color
+	NetworkManager.my_player_data["outline"] = outline_color
+	NetworkManager.my_player_data["eye"] = eye_color
 	
 	# UI
 	self.player_setup.hide()
@@ -41,10 +39,10 @@ func _on_player_setup_on_btn_create_pressed(player_name: String, face_color: Col
 # PlayerSetup-Join 버튼 클릭
 func _on_player_setup_on_btn_join_pressed(player_name: String, face_color: Color, outline_color: Color, eye_color: Color) -> void:
 	# 내 플레이어 데이터 설정
-	my_player_data["name"] = player_name
-	my_player_data["face"] = face_color
-	my_player_data["outline"] = outline_color
-	my_player_data["eye"] = eye_color
+	NetworkManager.my_player_data["name"] = player_name
+	NetworkManager.my_player_data["face"] = face_color
+	NetworkManager.my_player_data["outline"] = outline_color
+	NetworkManager.my_player_data["eye"] = eye_color
 	# UI
 	self.player_setup.hide()
 	self.join_server.show()
@@ -58,7 +56,7 @@ func _on_server_setup_btn_back_pressed() -> void:
 
 func _on_server_setup_btn_create_pressed(server_name: String, port: int) -> void:
 	# 서버생성
-	NetworkManager.create_server(server_name, port, my_player_data)
+	NetworkManager.create_server(server_name, port)
 	# 서버설정화면 숨기고 게임레벨 스폰
 	self.server_setup.hide()
 	game_level_spawner.spawn({})
@@ -74,5 +72,5 @@ func _on_join_server_on_btn_back_pressed() -> void:
 func _on_join_server_procced(ip: String, port: int) -> void:
 	self.join_server.hide()
 	
-	NetworkManager.join_server(ip, port, my_player_data)
+	NetworkManager.join_server(ip, port)
 #endregion
