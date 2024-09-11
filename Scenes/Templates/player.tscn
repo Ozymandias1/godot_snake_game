@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://cc2l7qw4e2q0n"]
+[gd_scene load_steps=7 format=3 uid="uid://cc2l7qw4e2q0n"]
 
 [ext_resource type="Texture2D" uid="uid://b34c6yrpj3p8w" path="res://Textures/face.png" id="1_eifjw"]
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_sxmqb"]
 [ext_resource type="Texture2D" uid="uid://cd0ts2gutcjrv" path="res://Textures/face_eye.png" id="2_ky4h1"]
 [ext_resource type="Texture2D" uid="uid://d03wu8b0mi7rx" path="res://Textures/face_outline.png" id="3_l0kde"]
+[ext_resource type="Script" path="res://Scripts/BodySpawner.gd" id="5_wpes1"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_7jt5j"]
 properties/0/path = NodePath("Head:position")
@@ -51,3 +52,10 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "PlayerName"
 horizontal_alignment = 1
+
+[node name="Bodies" type="Node" parent="."]
+
+[node name="BodySpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Scenes/Templates/body.tscn")
+spawn_path = NodePath("../Bodies")
+script = ExtResource("5_wpes1")

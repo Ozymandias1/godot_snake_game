@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://bfkl5iorohmod"]
+
+[ext_resource type="Texture2D" uid="uid://d1qyy7r24mi50" path="res://Textures/Ring_Fill_32x32.png" id="1_tb6v7"]
+[ext_resource type="Texture2D" uid="uid://yfsau7fn7tja" path="res://Textures/Ring_Outline_32x32.png" id="2_cxssy"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_rhlx4"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:scale")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+
+[node name="Body" type="Node2D"]
+
+[node name="Fill" type="Sprite2D" parent="."]
+modulate = Color(0.278431, 0.54902, 0.74902, 1)
+position = Vector2(0, 1)
+texture = ExtResource("1_tb6v7")
+
+[node name="Outline" type="Sprite2D" parent="."]
+texture = ExtResource("2_cxssy")
+
+[node name="BodySynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_rhlx4")

@@ -23,8 +23,6 @@ func _spawn_player(spawn_data: Dictionary) -> Node:
 
 	var player = PLAYER_TEMPLATE.instantiate()
 	player.name = str(peer_id)
-	player.set_player_nametag_text(player_data["name"])
-	player.set_head_color(player_data["face"], player_data["outline"], player_data["eye"])
-	player.set_initial_position(initial_positions[players.get_child_count()])
+	player.initialize(player_data, initial_positions[players.get_child_count()])
 
 	return player

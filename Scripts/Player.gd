@@ -5,6 +5,8 @@ class_name Player
 @onready var head: Node2D = $Head
 @onready var name_tag_root: Node2D = $NameTagRoot
 
+var body_list: Array[Node2D] = []
+
 # 씬 트리구조 진입
 func _enter_tree() -> void:
 	self.set_multiplayer_authority(self.name.to_int())
@@ -13,16 +15,12 @@ func _enter_tree() -> void:
 func _process(_delta: float) -> void:
 	name_tag_root.global_position = head.global_position + (Vector2.UP * 16)
 
-# 플레이어 이름표 텍스트 설정
-func set_player_nametag_text(name_text: String) -> void:
-	$NameTagRoot/NameTag.text = name_text
-
-# 머리 색상 설정
-func set_head_color(face_color: Color, outline_color: Color, eye_color: Color) -> void:
-	$Head/Face.modulate = face_color
-	$Head/FaceOutline.modulate = outline_color
-	$Head/FaceEye.modulate = eye_color
-
-# 초기 위치 설정
-func set_initial_position(pos: Vector2) -> void:
-	$Head.global_position = pos
+func initialize(player_data: Dictionary, location: Vector2) -> void:
+	$NameTagRoot/NameTag.text = player_data["name"]
+	$Head/Face.modulate = player_data["face"]
+	$Head/FaceOutline.modulate = player_data["outline"]
+	$Head/FaceEye.modulate = player_data["eye"]
+	$Head.global_position = location
+	
+	# 몸체 리스트에 머리 추가
+	self.body_list.append($Head)
