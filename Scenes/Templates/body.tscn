@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bfkl5iorohmod"]
+[gd_scene load_steps=6 format=3 uid="uid://bfkl5iorohmod"]
 
 [ext_resource type="Script" path="res://Scripts/Body.gd" id="1_nlxti"]
 [ext_resource type="Texture2D" uid="uid://d1qyy7r24mi50" path="res://Textures/Ring_Fill_32x32.png" id="1_tb6v7"]
 [ext_resource type="Texture2D" uid="uid://yfsau7fn7tja" path="res://Textures/Ring_Outline_32x32.png" id="2_cxssy"]
+[ext_resource type="Script" path="res://Scripts/FollowComponent.gd" id="4_pvcop"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_rhlx4"]
 properties/0/path = NodePath(".:position")
@@ -28,3 +29,7 @@ texture = ExtResource("2_cxssy")
 
 [node name="BodySynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_rhlx4")
+
+[node name="FollowComponent" type="Node" parent="." node_paths=PackedStringArray("follow_object")]
+script = ExtResource("4_pvcop")
+follow_object = NodePath("..")

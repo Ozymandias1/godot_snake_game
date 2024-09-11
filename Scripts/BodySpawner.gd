@@ -20,4 +20,12 @@ func _spawn_body(spawn_data: Dictionary) -> Node:
 	body.look_at(last_body.global_position)
 	player.body_list.append(body)
 	
+	# FollowComponent 목표 객체 설정
+	var follow_Component: FollowComponent = body.get_node("FollowComponent")
+	follow_Component.follow_target = last_body
+	follow_Component.player = player
+	
+	player.marking_component.on_marking.connect(follow_Component.update_target_position)
+	player.marking_component.on_marking.emit()
+	
 	return body
