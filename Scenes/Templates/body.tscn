@@ -31,5 +31,6 @@ texture = ExtResource("2_cxssy")
 replication_config = SubResource("SceneReplicationConfig_rhlx4")
 
 [node name="FollowComponent" type="Node" parent="." node_paths=PackedStringArray("follow_object")]
+process_mode = 4
 script = ExtResource("4_pvcop")
 follow_object = NodePath("..")
