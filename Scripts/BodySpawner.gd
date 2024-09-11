@@ -17,6 +17,7 @@ func _spawn_body(spawn_data: Dictionary) -> Node:
 	var body: Body = BODY_TEMPLATE.instantiate()
 	body.name = player.name + "_Body_" + str(player.body_list.size())
 	body.initialize(peer_id, player.get_node("Head/Face").modulate, player.get_node("Head/FaceOutline").modulate, body_location)
+	body.look_at(last_body.global_position)
 	player.body_list.append(body)
 	
 	return body

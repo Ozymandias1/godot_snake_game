@@ -5,6 +5,8 @@ class_name Player
 @onready var head: Node2D = $Head
 @onready var name_tag_root: Node2D = $NameTagRoot
 
+@export var steer_speed: float = 3.0
+
 var body_list: Array[Node2D] = []
 
 # 씬 트리구조 진입
