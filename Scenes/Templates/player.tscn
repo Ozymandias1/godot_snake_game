@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cc2l7qw4e2q0n"]
+[gd_scene load_steps=9 format=3 uid="uid://cc2l7qw4e2q0n"]
 
 [ext_resource type="Texture2D" uid="uid://b34c6yrpj3p8w" path="res://Textures/face.png" id="1_eifjw"]
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_sxmqb"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://d03wu8b0mi7rx" path="res://Textures/face_outline.png" id="3_l0kde"]
 [ext_resource type="Script" path="res://Scripts/BodySpawner.gd" id="5_wpes1"]
 [ext_resource type="Script" path="res://Scripts/SteeringComponent.gd" id="6_m76wp"]
+[ext_resource type="Script" path="res://Scripts/MoveComponent.gd" id="7_g2xs4"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_7jt5j"]
 properties/0/path = NodePath("Head:position")
@@ -63,5 +64,10 @@ script = ExtResource("5_wpes1")
 
 [node name="SteeringComponent" type="Node" parent="." node_paths=PackedStringArray("player", "target")]
 script = ExtResource("6_m76wp")
+player = NodePath("..")
+target = NodePath("../Head")
+
+[node name="MoveComponent" type="Node" parent="." node_paths=PackedStringArray("player", "target")]
+script = ExtResource("7_g2xs4")
 player = NodePath("..")
 target = NodePath("../Head")

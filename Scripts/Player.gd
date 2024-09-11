@@ -6,6 +6,7 @@ class_name Player
 @onready var name_tag_root: Node2D = $NameTagRoot
 
 @export var steer_speed: float = 3.0
+@export var move_speed: float = 100.0
 
 var body_list: Array[Node2D] = []
 

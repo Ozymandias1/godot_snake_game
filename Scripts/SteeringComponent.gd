@@ -1,3 +1,4 @@
+# SteeringComponent.gd
 extends Node
 class_name SteeringComponent
 
