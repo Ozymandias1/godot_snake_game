@@ -14,10 +14,9 @@ func _spawn_body(spawn_data: Dictionary) -> Node:
 	var last_body_front: Vector2 = last_body.global_transform.x
 	var body_location: Vector2 = last_body.global_position + (-last_body_front * 32)
 	
-	var body = BODY_TEMPLATE.instantiate()
-	body.set_multiplayer_authority(peer_id)
+	var body: Body = BODY_TEMPLATE.instantiate()
 	body.name = player.name + "_Body_" + str(player.body_list.size())
-	body.global_position = body_location
+	body.initialize(peer_id, player.get_node("Head/Face").modulate, player.get_node("Head/FaceOutline").modulate, body_location)
 	player.body_list.append(body)
 	
 	return body
