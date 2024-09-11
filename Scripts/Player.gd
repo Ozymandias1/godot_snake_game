@@ -14,13 +14,20 @@ func _enter_tree() -> void:
 # 업데이트
 func _process(_delta: float) -> void:
 	name_tag_root.global_position = head.global_position + (Vector2.UP * 16)
+	
+	# 테스트
+	if is_multiplayer_authority() and Input.is_action_just_released("TestKey"):
+		$BodySpawner.spawn({"peer_id": self.name.to_int()})
 
+# 플레이어 초기화
 func initialize(player_data: Dictionary, location: Vector2) -> void:
 	$NameTagRoot/NameTag.text = player_data["name"]
 	$Head/Face.modulate = player_data["face"]
 	$Head/FaceOutline.modulate = player_data["outline"]
 	$Head/FaceEye.modulate = player_data["eye"]
 	$Head.global_position = location
+	
+	$BodySpawner.player = self
 	
 	# 몸체 리스트에 머리 추가
 	self.body_list.append($Head)
