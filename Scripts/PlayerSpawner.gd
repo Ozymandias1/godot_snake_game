@@ -4,12 +4,12 @@ extends MultiplayerSpawner
 const PLAYER_TEMPLATE = preload("res://Scenes/Templates/player.tscn")
 @onready var players: Node = $"../Players"
 
-# 초기 플레이어 위치들
-const initial_positions: Array[Vector2] = [
-	Vector2(300, 200),
-	Vector2(1300, 700),
-	Vector2(300, 700),
-	Vector2(1300, 200),
+# 초기 플레이어 상태
+const initial_state: Array[Dictionary] = [
+	{ "location": Vector2(300, 200), "angle": 0 },
+	{ "location": Vector2(1300, 700), "angle": PI },
+	{ "location": Vector2(300, 200), "angle": 0 },
+	{ "location": Vector2(1300, 200), "angle": PI },
 ]
 
 # 시작
@@ -23,6 +23,6 @@ func _spawn_player(spawn_data: Dictionary) -> Node:
 
 	var player: Player = PLAYER_TEMPLATE.instantiate()
 	player.name = str(peer_id)
-	player.initialize(player_data, initial_positions[players.get_child_count()])
+	player.initialize(player_data, initial_state[players.get_child_count()])
 
 	return player

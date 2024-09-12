@@ -25,12 +25,13 @@ func _process(_delta: float) -> void:
 		_adjust_body_scale()
 
 # 플레이어 초기화
-func initialize(player_data: Dictionary, location: Vector2) -> void:
+func initialize(player_data: Dictionary, state: Dictionary) -> void:
 	$NameTagRoot/NameTag.text = player_data["name"]
 	$Head/Face.modulate = player_data["face"]
 	$Head/FaceOutline.modulate = player_data["outline"]
 	$Head/FaceEye.modulate = player_data["eye"]
-	$Head.global_position = location
+	$Head.global_position = state["location"]
+	$Head.rotation = state["angle"]
 
 	$BodySpawner.player = self
 
@@ -45,7 +46,6 @@ func add_body() -> void:
 
 # 몸체 크기 조정
 func _adjust_body_scale() -> void:
-	print_debug("body count: ", self.body_list.size())
 	var scale_array: Array[Vector2] = [
 		Vector2.ONE * 0.5,
 		Vector2.ONE * 0.6,
