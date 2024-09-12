@@ -11,7 +11,15 @@ func _ready() -> void:
 
 # 플레이어 접속 처리
 func _on_player_connected(peer_id: int, player_data: Dictionary) -> void:
-	player_spawner.spawn({
+	var player = player_spawner.spawn({
 		"peer_id": peer_id,
 		"player_data": player_data
 	})
+	
+	# 플레이어 생성시 몸체 3개 생성
+	await get_tree().create_timer(0.1).timeout
+	player.add_body.rpc_id(peer_id)
+	await get_tree().create_timer(0.1).timeout
+	player.add_body.rpc_id(peer_id)
+	await get_tree().create_timer(0.1).timeout
+	player.add_body.rpc_id(peer_id)

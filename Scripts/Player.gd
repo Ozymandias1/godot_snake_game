@@ -35,3 +35,8 @@ func initialize(player_data: Dictionary, location: Vector2) -> void:
 	
 	# 몸체 리스트에 머리 추가
 	self.body_list.append($Head)
+
+# 몸체 추가 함수
+@rpc("call_local", "any_peer")
+func add_body() -> void:
+	$BodySpawner.spawn({"peer_id": self.name.to_int()})
