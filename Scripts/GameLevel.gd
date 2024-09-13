@@ -2,9 +2,12 @@
 extends Node
 
 @onready var player_spawner: MultiplayerSpawner = $PlayerSpawner
+@onready var btn_start_game: Button = $UI/BtnStartGame
 
 # 시작
 func _ready() -> void:
+	btn_start_game.visible = multiplayer.is_server()
+	
 	if multiplayer.is_server():
 		NetworkManager.on_player_connected.connect(self._on_player_connected)
 		self._on_player_connected(1, NetworkManager.my_player_data)
