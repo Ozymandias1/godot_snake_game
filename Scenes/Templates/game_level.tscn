@@ -1,8 +1,25 @@
-[gd_scene load_steps=4 format=3 uid="uid://drk5f5ngmiwx5"]
+[gd_scene load_steps=5 format=3 uid="uid://drk5f5ngmiwx5"]
 
 [ext_resource type="Script" path="res://Scripts/GameLevel.gd" id="1_crwjw"]
 [ext_resource type="PackedScene" uid="uid://ie288gw0t40c" path="res://Scenes/Templates/screen_boundary.tscn" id="2_7atmv"]
 [ext_resource type="Script" path="res://Scripts/PlayerSpawner.gd" id="3_7togj"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_2gsxc"]
+properties/0/path = NodePath("LabelTimerRoot/LabelTimer:text")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("LabelTimerRoot:position")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("LabelTimerRoot:scale")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("LabelTimerRoot/LabelTimer:visible")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("LabelTimerRoot/LabelTimer:modulate")
+properties/4/spawn = true
+properties/4/replication_mode = 1
 
 [node name="GameLevel" type="Node"]
 script = ExtResource("1_crwjw")
@@ -51,4 +68,29 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 100
 text = "Start Game"
 
+[node name="StartGameTimer" type="Timer" parent="UI"]
+
+[node name="LabelTimerSynchronizer" type="MultiplayerSynchronizer" parent="UI"]
+replication_config = SubResource("SceneReplicationConfig_2gsxc")
+
+[node name="LabelTimerRoot" type="Node2D" parent="UI"]
+
+[node name="LabelTimer" type="Label" parent="UI/LabelTimerRoot"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -57.0
+offset_top = -136.5
+offset_right = 57.0
+offset_bottom = 136.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 200
+text = "3"
+horizontal_alignment = 1
+
 [connection signal="pressed" from="UI/BtnStartGame" to="." method="_on_btn_start_game_pressed"]
+[connection signal="timeout" from="UI/StartGameTimer" to="." method="_on_start_game_timer_timeout"]
