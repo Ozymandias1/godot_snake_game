@@ -24,6 +24,7 @@ NetworkManager="*res://Scripts/NetworkManager.gd"
 window/size/viewport_width=1600
 window/size/viewport_height=900
 window/size/resizable=false
+window/vsync/vsync_mode=0
 
 [input]
 

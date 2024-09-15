@@ -42,7 +42,6 @@ func _on_player_connected(peer_id: int, player_data: Dictionary) -> void:
 
 # 게임 시작 버튼
 func _on_btn_start_game_pressed() -> void:
-	#self._start_game.rpc()
 	self.btn_start_game.hide()
 	self.start_game_timer.start()
 	self._on_start_game_timer_timeout()

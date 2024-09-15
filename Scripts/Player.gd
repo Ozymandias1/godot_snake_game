@@ -6,6 +6,7 @@ class_name Player
 @onready var name_tag_root: Node2D = $NameTagRoot
 @onready var marking_component: MarkingComponent = $MarkingComponent
 @onready var move_component: MoveComponent = $MoveComponent
+@onready var steering_component: SteeringComponent = $SteeringComponent
 
 @export var steer_speed: float = 3.0
 @export var move_speed: float = 100.0
@@ -63,6 +64,7 @@ func _adjust_body_scale() -> void:
 
 # 플레이어 이동 시작
 func start_move() -> void:
+	steering_component.process_mode = Node.PROCESS_MODE_INHERIT
 	move_component.process_mode = Node.PROCESS_MODE_INHERIT
 	
 	for i in range(1, self.body_list.size()):
