@@ -5,6 +5,7 @@ class_name Player
 @onready var head: Node2D = $Head
 @onready var name_tag_root: Node2D = $NameTagRoot
 @onready var marking_component: MarkingComponent = $MarkingComponent
+@onready var move_component: MoveComponent = $MoveComponent
 
 @export var steer_speed: float = 3.0
 @export var move_speed: float = 100.0
@@ -59,3 +60,10 @@ func _adjust_body_scale() -> void:
 		self.body_list[i].change_body_scale(scale_array[scale_index])
 		scale_index += 1
 		scale_index = clampi(scale_index, 0, scale_array.size()-1)
+
+# 플레이어 이동 시작
+func start_move() -> void:
+	move_component.process_mode = Node.PROCESS_MODE_INHERIT
+	
+	for i in range(1, self.body_list.size()):
+		self.body_list[i].get_node("FollowComponent").process_mode = Node.PROCESS_MODE_INHERIT

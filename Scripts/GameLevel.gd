@@ -3,6 +3,7 @@ extends Node
 
 @onready var player_spawner: MultiplayerSpawner = $PlayerSpawner
 @onready var btn_start_game: Button = $UI/BtnStartGame
+@onready var players: Node = $Players
 
 # 시작
 func _ready() -> void:
@@ -26,3 +27,13 @@ func _on_player_connected(peer_id: int, player_data: Dictionary) -> void:
 	player.add_body.rpc_id(peer_id)
 	await get_tree().create_timer(0.1).timeout
 	player.add_body.rpc_id(peer_id)
+
+# 게임 시작 버튼
+func _on_btn_start_game_pressed() -> void:
+	self._start_game.rpc()
+
+# 게임 시작
+@rpc("any_peer", "call_local")
+func _start_game() -> void:
+	for player in players.get_children():
+		player.start_move()

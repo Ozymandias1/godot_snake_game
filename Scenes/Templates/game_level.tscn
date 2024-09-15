@@ -50,3 +50,5 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 100
 text = "Start Game"
+
+[connection signal="pressed" from="UI/BtnStartGame" to="." method="_on_btn_start_game_pressed"]
