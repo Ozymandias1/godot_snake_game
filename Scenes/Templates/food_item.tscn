@@ -12,6 +12,7 @@ properties/1/spawn = true
 properties/1/replication_mode = 1
 
 [node name="FoodItem" type="Area2D"]
+metadata/is_food_item = true
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_left = -16.0

@@ -2,6 +2,8 @@
 extends Node
 class_name Player
 
+signal on_player_head_area2d_entered(peer_id: int, player: Player, other: Area2D)
+
 @onready var head: Node2D = $Head
 @onready var name_tag_root: Node2D = $NameTagRoot
 @onready var marking_component: MarkingComponent = $MarkingComponent
@@ -23,7 +25,7 @@ func _process(_delta: float) -> void:
 
 	# 테스트
 	if is_multiplayer_authority() and Input.is_action_just_released("TestKey"):
-		$BodySpawner.spawn({"peer_id": self.name.to_int()})
+		$BodySpawner.spawn({"peer_id": self.name.to_int(), "is_paused": false })
 		_adjust_body_scale()
 
 # 플레이어 초기화
@@ -42,8 +44,8 @@ func initialize(player_data: Dictionary, state: Dictionary) -> void:
 
 # 몸체 추가 함수
 @rpc("call_local", "any_peer")
-func add_body() -> void:
-	$BodySpawner.spawn({"peer_id": self.name.to_int()})
+func add_body(is_paused: bool) -> void:
+	$BodySpawner.spawn({"peer_id": self.name.to_int(), "is_paused": is_paused})
 	self._adjust_body_scale()
 
 # 몸체 크기 조정
@@ -66,6 +68,10 @@ func _adjust_body_scale() -> void:
 func start_move() -> void:
 	steering_component.process_mode = Node.PROCESS_MODE_INHERIT
 	move_component.process_mode = Node.PROCESS_MODE_INHERIT
-	
+
 	for i in range(1, self.body_list.size()):
 		self.body_list[i].get_node("FollowComponent").process_mode = Node.PROCESS_MODE_INHERIT
+
+# 머리 area2d 충돌 처리
+func _on_head_area2d_entered(other_area: Area2D) -> void:
+	on_player_head_area2d_entered.emit(self.name.to_int(), self, other_area)

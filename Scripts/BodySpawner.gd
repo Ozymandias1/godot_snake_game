@@ -8,6 +8,7 @@ func _ready() -> void:
 
 func _spawn_body(spawn_data: Dictionary) -> Node:
 	var peer_id: int = spawn_data["peer_id"]
+	var is_paused: bool = spawn_data["is_paused"]
 	
 	# 생성 위치 계산
 	var last_body: Node2D = player.body_list.back()
@@ -24,6 +25,11 @@ func _spawn_body(spawn_data: Dictionary) -> Node:
 	var follow_Component: FollowComponent = body.get_node("FollowComponent")
 	follow_Component.follow_target = last_body
 	follow_Component.player = player
+	
+	if is_paused:
+		follow_Component.process_mode = Node.PROCESS_MODE_DISABLED
+	else:
+		follow_Component.process_mode = Node.PROCESS_MODE_INHERIT
 	
 	player.marking_component.on_marking.connect(follow_Component.update_target_position)
 	player.marking_component.on_marking.emit()

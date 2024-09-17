@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cc2l7qw4e2q0n"]
+[gd_scene load_steps=12 format=3 uid="uid://cc2l7qw4e2q0n"]
 
 [ext_resource type="Texture2D" uid="uid://b34c6yrpj3p8w" path="res://Textures/face.png" id="1_eifjw"]
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_sxmqb"]
@@ -9,6 +9,9 @@
 [ext_resource type="Script" path="res://Scripts/MoveComponent.gd" id="7_g2xs4"]
 [ext_resource type="Script" path="res://Scripts/MarkingComponent.gd" id="8_ycktu"]
 [ext_resource type="Script" path="res://Scripts/FlipComponent.gd" id="9_wf64i"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1sret"]
+radius = 16.0
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_7jt5j"]
 properties/0/path = NodePath("Head:position")
@@ -37,6 +40,11 @@ texture = ExtResource("2_ky4h1")
 [node name="FaceOutline" type="Sprite2D" parent="Head"]
 scale = Vector2(0.035, 0.035)
 texture = ExtResource("3_l0kde")
+
+[node name="Area2D_Head" type="Area2D" parent="Head"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Head/Area2D_Head"]
+shape = SubResource("CircleShape2D_1sret")
 
 [node name="PlayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_7jt5j")
@@ -85,3 +93,5 @@ target = NodePath("../Head")
 script = ExtResource("9_wf64i")
 target = NodePath("../Head")
 target_sprites = [NodePath("../Head/Face"), NodePath("../Head/FaceEye"), NodePath("../Head/FaceOutline")]
+
+[connection signal="area_entered" from="Head/Area2D_Head" to="." method="_on_head_area2d_entered"]
