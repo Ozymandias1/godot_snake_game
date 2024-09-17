@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://drk5f5ngmiwx5"]
+[gd_scene load_steps=6 format=3 uid="uid://drk5f5ngmiwx5"]
 
 [ext_resource type="Script" path="res://Scripts/GameLevel.gd" id="1_crwjw"]
 [ext_resource type="PackedScene" uid="uid://ie288gw0t40c" path="res://Scenes/Templates/screen_boundary.tscn" id="2_7atmv"]
 [ext_resource type="Script" path="res://Scripts/PlayerSpawner.gd" id="3_7togj"]
+[ext_resource type="Script" path="res://Scripts/FoodSpawner.gd" id="4_x5dai"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_2gsxc"]
 properties/0/path = NodePath("LabelTimerRoot/LabelTimer:text")
@@ -43,6 +44,16 @@ direction = 1
 _spawnable_scenes = PackedStringArray("res://Scenes/Templates/player.tscn")
 spawn_path = NodePath("../Players")
 script = ExtResource("3_7togj")
+
+[node name="Foods" type="Node" parent="."]
+
+[node name="FoodSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Scenes/Templates/food_item.tscn")
+spawn_path = NodePath("../Foods")
+spawn_limit = 10
+script = ExtResource("4_x5dai")
+
+[node name="Timer" type="Timer" parent="FoodSpawner"]
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
@@ -92,5 +103,6 @@ theme_override_font_sizes/font_size = 200
 text = "3"
 horizontal_alignment = 1
 
+[connection signal="timeout" from="FoodSpawner/Timer" to="FoodSpawner" method="_on_timer_timeout"]
 [connection signal="pressed" from="UI/BtnStartGame" to="." method="_on_btn_start_game_pressed"]
 [connection signal="timeout" from="UI/StartGameTimer" to="." method="_on_start_game_timer_timeout"]

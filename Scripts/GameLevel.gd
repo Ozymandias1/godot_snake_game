@@ -7,6 +7,7 @@ extends Node
 @onready var label_timer_root: Node2D = $UI/LabelTimerRoot
 @onready var label_timer: Label = $UI/LabelTimerRoot/LabelTimer
 @onready var start_game_timer: Timer = $UI/StartGameTimer
+@onready var food_spawn_timer: Timer = $FoodSpawner/Timer
 
 var start_game_remain_time: int = 4
 var remain_time_tween: Tween = null
@@ -42,6 +43,7 @@ func _on_player_connected(peer_id: int, player_data: Dictionary) -> void:
 
 # 게임 시작 버튼
 func _on_btn_start_game_pressed() -> void:
+	self.food_spawn_timer.start()
 	self.btn_start_game.hide()
 	self.start_game_timer.start()
 	self._on_start_game_timer_timeout()
