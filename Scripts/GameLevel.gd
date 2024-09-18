@@ -90,3 +90,5 @@ func on_player_head_area2d_entered(peer_id: int, player: Player, other: Area2D) 
 	if is_food_item:
 		player.add_body.rpc_id(peer_id, false)
 		other.queue_free.call_deferred()
+	else:
+		print_debug("on_player_head_area2d_entered")

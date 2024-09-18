@@ -8,7 +8,7 @@ const PLAYER_TEMPLATE = preload("res://Scenes/Templates/player.tscn")
 const initial_state: Array[Dictionary] = [
 	{ "location": Vector2(300, 200), "angle": 0 },
 	{ "location": Vector2(1300, 700), "angle": PI },
-	{ "location": Vector2(300, 200), "angle": 0 },
+	{ "location": Vector2(300, 700), "angle": 0 },
 	{ "location": Vector2(1300, 200), "angle": PI },
 ]
 

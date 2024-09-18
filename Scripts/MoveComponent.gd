@@ -8,5 +8,6 @@ class_name MoveComponent
 # 업데이트
 func _process(delta: float) -> void:
 	if is_multiplayer_authority():
-		var front = target.global_transform.x
-		target.global_position += player.move_speed * front * delta
+		if Input.is_action_pressed("Boost"):
+			var front = target.global_transform.x
+			target.global_position += player.move_speed * front * delta
