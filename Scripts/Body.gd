@@ -19,6 +19,6 @@ func initialize(player_peer_id: int, fill_color: Color, outline_color: Color, lo
 # 몸체 크기 조정 애니메이션 처리
 func change_body_scale(target_scale: Vector2) -> void:
 	if scale_tween:
-		scale_tween.stop()
+		scale_tween.kill()
 	scale_tween = get_tree().create_tween()
 	scale_tween.tween_property(self, "scale", target_scale, 0.1)

@@ -14,6 +14,7 @@ signal on_player_head_area2d_entered(peer_id: int, player: Player, other: Area2D
 @export var move_speed: float = 100.0
 
 var body_list: Array[Node2D] = []
+var blink_tween: Tween
 
 # 씬 트리구조 진입
 func _enter_tree() -> void:
@@ -25,8 +26,7 @@ func _process(_delta: float) -> void:
 
 	# 테스트
 	if is_multiplayer_authority() and Input.is_action_just_released("TestKey"):
-		$BodySpawner.spawn({"peer_id": self.name.to_int(), "is_paused": false })
-		_adjust_body_scale()
+		self.blink()
 
 # 플레이어 초기화
 func initialize(player_data: Dictionary, state: Dictionary) -> void:
@@ -75,3 +75,22 @@ func start_move() -> void:
 # 머리 area2d 충돌 처리
 func _on_head_area2d_entered(other_area: Area2D) -> void:
 	on_player_head_area2d_entered.emit(self.name.to_int(), self, other_area)
+
+# 플레이어 깜빡임 처리
+func blink() -> void:
+	# 반투명깜박임
+	if blink_tween:
+		blink_tween.kill()
+	blink_tween = get_tree().create_tween()
+	blink_tween.set_loops(3)
+	blink_tween.tween_method(self.set_sprite_alpha, 1.0, 0.0, 0.25)
+	blink_tween.tween_method(self.set_sprite_alpha, 0.0, 1.0, 0.25)
+	# 이동 중지
+	# 콜리전 비활성
+	# 나머지 몸체 제거
+
+# 스프라이트 투명도 설정
+func set_sprite_alpha(alpha: float) -> void:
+	var sprites = self.find_children("*", "Sprite2D", true, false)
+	for sprite in sprites:
+		sprite.modulate.a = alpha
