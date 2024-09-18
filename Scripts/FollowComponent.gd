@@ -13,6 +13,7 @@ func _process(delta: float) -> void:
 	if follow_target != null:
 		var direction = (target_position - follow_object.global_position).normalized()
 		follow_object.global_position += direction * player.move_speed * delta
+		follow_object.look_at(follow_target.global_position)
 
 # 목표위치 업데이트
 func update_target_position() -> void:
