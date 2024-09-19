@@ -79,18 +79,31 @@ func _on_head_area2d_entered(other_area: Area2D) -> void:
 # 플레이어 깜빡임 처리
 func blink() -> void:
 	# 반투명깜박임
+	self.do_blink.rpc()
+	# 이동 중지
+	# 콜리전 비활성
+	self.set_collision_disable.rpc(true)
+	# 나머지 몸체 제거
+
+# 스프라이트 투명도 설정
+@rpc("any_peer", "call_local")
+func do_blink() -> void:
 	if blink_tween:
 		blink_tween.kill()
 	blink_tween = get_tree().create_tween()
 	blink_tween.set_loops(3)
-	blink_tween.tween_method(self.set_sprite_alpha, 1.0, 0.0, 0.25)
-	blink_tween.tween_method(self.set_sprite_alpha, 0.0, 1.0, 0.25)
-	# 이동 중지
-	# 콜리전 비활성
-	# 나머지 몸체 제거
+	blink_tween.tween_method(self.set_sprite_alpha_method, 1.0, 0.0, 0.25)
+	blink_tween.tween_method(self.set_sprite_alpha_method, 0.0, 1.0, 0.25)
 
 # 스프라이트 투명도 설정
-func set_sprite_alpha(alpha: float) -> void:
+func set_sprite_alpha_method(alpha: float) -> void:
 	var sprites = self.find_children("*", "Sprite2D", true, false)
 	for sprite in sprites:
 		sprite.modulate.a = alpha
+
+# 콜리전 비활성화 여부 설정
+@rpc("any_peer", "call_local")
+func set_collision_disable(is_disable: bool) -> void:
+	var collisions = self.find_children("*", "CollisionShape2D", true, false)
+	for collision in collisions:
+		collision.disabled = is_disable
