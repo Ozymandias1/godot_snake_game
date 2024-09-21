@@ -4,6 +4,7 @@
 radius = 16.0
 
 [node name="BodyCollision" type="Area2D"]
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_81eq3")
