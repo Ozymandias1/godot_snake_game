@@ -3,6 +3,7 @@ extends Node
 class_name Player
 
 signal on_player_head_area2d_entered(peer_id: int, player: Player, other: Area2D)
+signal on_player_reset_complete(peer_id: int, player: Player)
 
 @onready var head: Node2D = $Head
 @onready var name_tag_root: Node2D = $NameTagRoot
@@ -27,7 +28,7 @@ func _process(_delta: float) -> void:
 
 	# 테스트
 	if is_multiplayer_authority() and Input.is_action_just_released("TestKey"):
-		self.blink()
+		self.reset()
 
 # 플레이어 초기화
 func initialize(player_data: Dictionary, state: Dictionary) -> void:
@@ -39,11 +40,11 @@ func initialize(player_data: Dictionary, state: Dictionary) -> void:
 	$Head.rotation = state["angle"]
 
 	$BodySpawner.player = self
-	
+
 	# 초기 상태 저장
 	initial_state["location"] = state["location"]
 	initial_state["angle"] = state["angle"]
-	
+
 	# 몸체 리스트에 머리 추가
 	self.body_list.append($Head)
 
@@ -70,9 +71,10 @@ func _adjust_body_scale() -> void:
 		scale_index = clampi(scale_index, 0, scale_array.size()-1)
 
 # 플레이어 이동 시작
+@rpc("any_peer", "call_local")
 func start_move() -> void:
-	steering_component.process_mode = Node.PROCESS_MODE_INHERIT
-	move_component.process_mode = Node.PROCESS_MODE_INHERIT
+	self._set_control_process_mode(Node.PROCESS_MODE_INHERIT)
+	self._set_collision_disable(false)
 
 	for i in range(1, self.body_list.size()):
 		self.body_list[i].get_node("FollowComponent").process_mode = Node.PROCESS_MODE_INHERIT
@@ -83,26 +85,31 @@ func _on_head_area2d_entered(other_area: Area2D) -> void:
 
 # 플레이어 깜빡임 처리
 @rpc("any_peer", "call_local")
-func blink() -> void:
+func reset() -> void:
 	var blink_time: float = 0.5
 	var blink_count: int = 3
 	# 반투명깜박임
 	self.do_blink.rpc(blink_time, blink_count)
-	if is_multiplayer_authority():
-		# 이동, 조작 중지
-		self._set_control_process_mode.rpc(Node.PROCESS_MODE_DISABLED)
-		# 콜리전 비활성
-		self._set_collision_disable.rpc(true)
-		# 나머지 몸체 제거
-		await get_tree().create_timer(blink_time * blink_count).timeout
-		var body_count: int = self.body_list.size()
-		for i in range(body_count-1):
+	# 이동, 조작 중지
+	self._set_control_process_mode.rpc(Node.PROCESS_MODE_DISABLED)
+	# 콜리전 비활성
+	self._set_collision_disable.rpc(true)
+	# 권한이 필요한 작업 처리
+	await get_tree().create_timer(blink_time * blink_count).timeout
+	# 머리를 제외한 몸체 제거
+	var body_count: int = self.body_list.size()
+	for i in range(body_count-1): # 몸체 목록에서 머리를 제외한 개수만큼 1번째것을 제거한다(리스트에서도 제거를 하므로)
+		if is_multiplayer_authority(): # 실제 몸체 제거 함수 호출은 권한이 있는 피어만 수행하고 나머지는 body_list의 항목 제거만 수행
 			var del_body = self.body_list[1]
 			del_body.queue_free()
-			self.body_list.remove_at(1)
+		self.body_list.remove_at(1)
+	if is_multiplayer_authority():
 		# 초기위치로
 		head.global_position = initial_state["location"]
 		head.rotation = initial_state["angle"]
+
+	# 리셋 시그널 발동
+	on_player_reset_complete.emit(self.name.to_int(), self)
 
 # 스프라이트 투명도 설정
 @rpc("any_peer", "call_local")
