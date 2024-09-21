@@ -15,6 +15,7 @@ signal on_player_head_area2d_entered(peer_id: int, player: Player, other: Area2D
 
 var body_list: Array[Node2D] = []
 var blink_tween: Tween
+var initial_state: Dictionary = {}
 
 # 씬 트리구조 진입
 func _enter_tree() -> void:
@@ -38,7 +39,11 @@ func initialize(player_data: Dictionary, state: Dictionary) -> void:
 	$Head.rotation = state["angle"]
 
 	$BodySpawner.player = self
-
+	
+	# 초기 상태 저장
+	initial_state["location"] = state["location"]
+	initial_state["angle"] = state["angle"]
+	
 	# 몸체 리스트에 머리 추가
 	self.body_list.append($Head)
 
@@ -78,22 +83,33 @@ func _on_head_area2d_entered(other_area: Area2D) -> void:
 
 # 플레이어 깜빡임 처리
 func blink() -> void:
+	var blink_time: float = 0.5
+	var blink_count: int = 3
 	# 반투명깜박임
-	self.do_blink.rpc()
+	self.do_blink.rpc(blink_time, blink_count)
 	# 이동 중지
 	# 콜리전 비활성
 	self.set_collision_disable.rpc(true)
 	# 나머지 몸체 제거
+	await get_tree().create_timer(blink_time * blink_count).timeout
+	var body_count: int = self.body_list.size()
+	for i in range(body_count-1):
+		var del_body = self.body_list[1]
+		del_body.queue_free()
+		self.body_list.remove_at(1)
+	# 초기위치로
+	head.global_position = initial_state["location"]
+	head.rotation = initial_state["angle"]
 
 # 스프라이트 투명도 설정
 @rpc("any_peer", "call_local")
-func do_blink() -> void:
+func do_blink(blink_time: float, blink_count: int) -> void:
 	if blink_tween:
 		blink_tween.kill()
 	blink_tween = get_tree().create_tween()
-	blink_tween.set_loops(3)
-	blink_tween.tween_method(self.set_sprite_alpha_method, 1.0, 0.0, 0.25)
-	blink_tween.tween_method(self.set_sprite_alpha_method, 0.0, 1.0, 0.25)
+	blink_tween.set_loops(blink_count)
+	blink_tween.tween_method(self.set_sprite_alpha_method, 1.0, 0.0, blink_time * 0.5)
+	blink_tween.tween_method(self.set_sprite_alpha_method, 0.0, 1.0, blink_time * 0.5)
 
 # 스프라이트 투명도 설정
 func set_sprite_alpha_method(alpha: float) -> void:
