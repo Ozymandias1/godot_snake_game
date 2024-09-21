@@ -88,12 +88,13 @@ func blink() -> void:
 	var blink_count: int = 3
 	# 반투명깜박임
 	self.do_blink.rpc(blink_time, blink_count)
-	# 이동 중지
-	# 콜리전 비활성
-	self.set_collision_disable.rpc(true)
-	# 나머지 몸체 제거
-	await get_tree().create_timer(blink_time * blink_count).timeout
 	if is_multiplayer_authority():
+		# 이동, 조작 중지
+		self._set_control_process_mode.rpc(Node.PROCESS_MODE_DISABLED)
+		# 콜리전 비활성
+		self._set_collision_disable.rpc(true)
+		# 나머지 몸체 제거
+		await get_tree().create_timer(blink_time * blink_count).timeout
 		var body_count: int = self.body_list.size()
 		for i in range(body_count-1):
 			var del_body = self.body_list[1]
@@ -110,18 +111,24 @@ func do_blink(blink_time: float, blink_count: int) -> void:
 		blink_tween.kill()
 	blink_tween = get_tree().create_tween()
 	blink_tween.set_loops(blink_count)
-	blink_tween.tween_method(self.set_sprite_alpha_method, 1.0, 0.0, blink_time * 0.5)
-	blink_tween.tween_method(self.set_sprite_alpha_method, 0.0, 1.0, blink_time * 0.5)
+	blink_tween.tween_method(self._set_sprite_alpha_method, 1.0, 0.0, blink_time * 0.5)
+	blink_tween.tween_method(self._set_sprite_alpha_method, 0.0, 1.0, blink_time * 0.5)
 
 # 스프라이트 투명도 설정
-func set_sprite_alpha_method(alpha: float) -> void:
+func _set_sprite_alpha_method(alpha: float) -> void:
 	var sprites = self.find_children("*", "Sprite2D", true, false)
 	for sprite in sprites:
 		sprite.modulate.a = alpha
 
+# 이동, 조작 프로세싱 모드 설정
+@rpc("any_peer", "call_local")
+func _set_control_process_mode(mode: ProcessMode) -> void:
+	self.move_component.process_mode = mode
+	self.steering_component.process_mode = mode
+
 # 콜리전 비활성화 여부 설정
 @rpc("any_peer", "call_local")
-func set_collision_disable(is_disable: bool) -> void:
+func _set_collision_disable(is_disable: bool) -> void:
 	var collisions = self.find_children("*", "CollisionShape2D", true, false)
 	for collision in collisions:
 		collision.set_deferred("disabled", is_disable)

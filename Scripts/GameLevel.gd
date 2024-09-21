@@ -92,4 +92,3 @@ func on_player_head_area2d_entered(peer_id: int, player: Player, other: Area2D) 
 		other.queue_free.call_deferred()
 	else:
 		player.blink.rpc()
-		print_debug("on_player_head_area2d_entered")
