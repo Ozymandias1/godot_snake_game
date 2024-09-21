@@ -82,6 +82,7 @@ func _on_head_area2d_entered(other_area: Area2D) -> void:
 	on_player_head_area2d_entered.emit(self.name.to_int(), self, other_area)
 
 # 플레이어 깜빡임 처리
+@rpc("any_peer", "call_local")
 func blink() -> void:
 	var blink_time: float = 0.5
 	var blink_count: int = 3
@@ -92,14 +93,15 @@ func blink() -> void:
 	self.set_collision_disable.rpc(true)
 	# 나머지 몸체 제거
 	await get_tree().create_timer(blink_time * blink_count).timeout
-	var body_count: int = self.body_list.size()
-	for i in range(body_count-1):
-		var del_body = self.body_list[1]
-		del_body.queue_free()
-		self.body_list.remove_at(1)
-	# 초기위치로
-	head.global_position = initial_state["location"]
-	head.rotation = initial_state["angle"]
+	if is_multiplayer_authority():
+		var body_count: int = self.body_list.size()
+		for i in range(body_count-1):
+			var del_body = self.body_list[1]
+			del_body.queue_free()
+			self.body_list.remove_at(1)
+		# 초기위치로
+		head.global_position = initial_state["location"]
+		head.rotation = initial_state["angle"]
 
 # 스프라이트 투명도 설정
 @rpc("any_peer", "call_local")
@@ -122,4 +124,5 @@ func set_sprite_alpha_method(alpha: float) -> void:
 func set_collision_disable(is_disable: bool) -> void:
 	var collisions = self.find_children("*", "CollisionShape2D", true, false)
 	for collision in collisions:
-		collision.disabled = is_disable
+		collision.set_deferred("disabled", is_disable)
+		#collision.disabled = is_disable
