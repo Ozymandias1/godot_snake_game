@@ -15,9 +15,11 @@ func _spawn_body(spawn_data: Dictionary) -> Node:
 	var last_body_front: Vector2 = last_body.global_transform.x
 	var body_location: Vector2 = last_body.global_position + (-last_body_front * 32 / last_body.scale)
 	
+	var is_first_body: bool = player.get_node("Head") == last_body
+	
 	var body: Body = BODY_TEMPLATE.instantiate()
 	body.name = player.name + "_Body_" + str(player.body_list.size())
-	body.initialize(peer_id, player.get_node("Head/Face").modulate, player.get_node("Head/FaceOutline").modulate, body_location)
+	body.initialize(peer_id, player.get_node("Head/Face").modulate, player.get_node("Head/FaceOutline").modulate, body_location, is_first_body)
 	body.look_at(last_body.global_position)
 	player.body_list.append(body)
 	
