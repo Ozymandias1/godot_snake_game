@@ -42,11 +42,11 @@ func _on_player_connected(peer_id: int, player_data: Dictionary) -> void:
 	player.add_body.rpc_id(peer_id, true)
 	await get_tree().create_timer(0.1).timeout
 	player.add_body.rpc_id(peer_id, true)
-	
+
 	# 플레이어 머리 충돌 처리 시그널 처리 등록
 	player.on_player_head_area2d_entered.connect(self._on_player_head_area2d_entered)
 	player.on_player_reset_complete.connect(self._on_player_reset_complete)
-	
+
 	# 점수판
 	scores[peer_id] = 0
 	score_board_item_spawner.spawn({
@@ -100,11 +100,16 @@ func _on_player_head_area2d_entered(peer_id: int, player: Player, other: Area2D)
 	if is_food_item:
 		player.add_body.rpc_id(peer_id, false)
 		other.queue_free.call_deferred()
-		
-		scores[peer_id] += 1
-		score_board_item_spawner.set_score(peer_id, scores[peer_id])
+		# 점수
+		self.scores[peer_id] += 1
+		self.score_board_item_spawner.set_score(peer_id, scores[peer_id])
 	else:
 		player.reset.rpc()
+		# 충돌한 객체의 부모노드가 Body타입이라면 다른 플레이어의 몸체에 충돌한 것이므로
+		var other_player_body = other.get_parent()
+		if is_instance_of(other_player_body, Body):
+			self.scores[other_player_body.peer_id] += 5
+			self.score_board_item_spawner.set_score(other_player_body.peer_id, scores[other_player_body.peer_id])
 
 # 플레이어 리셋 완료 처리
 func _on_player_reset_complete(peer_id: int, player: Player) -> void:
