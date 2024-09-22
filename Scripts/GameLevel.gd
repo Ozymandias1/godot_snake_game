@@ -12,6 +12,7 @@ extends Node
 
 var start_game_remain_time: int = 4
 var remain_time_tween: Tween = null
+var scores: Dictionary = {}
 
 # 시작
 func _ready() -> void:
@@ -47,6 +48,7 @@ func _on_player_connected(peer_id: int, player_data: Dictionary) -> void:
 	player.on_player_reset_complete.connect(self._on_player_reset_complete)
 	
 	# 점수판
+	scores[peer_id] = 0
 	score_board_item_spawner.spawn({
 		"peer_id": peer_id,
 		"player_data": player_data
@@ -98,6 +100,9 @@ func _on_player_head_area2d_entered(peer_id: int, player: Player, other: Area2D)
 	if is_food_item:
 		player.add_body.rpc_id(peer_id, false)
 		other.queue_free.call_deferred()
+		
+		scores[peer_id] += 1
+		score_board_item_spawner.set_score(peer_id, scores[peer_id])
 	else:
 		player.reset.rpc()
 

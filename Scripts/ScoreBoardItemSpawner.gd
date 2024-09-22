@@ -2,6 +2,7 @@
 extends MultiplayerSpawner
 
 const SCORE_BOARD_ITEM_TEMPLATE = preload("res://Scenes/Templates/score_board_item.tscn")
+@onready var container: VBoxContainer = $"../Container"
 
 # 시작
 func _ready() -> void:
@@ -17,3 +18,8 @@ func _spawn_score_board_item(spawn_data: Dictionary) -> Node:
 	item.set_player_name(player_data["name"])
 	
 	return item
+
+# 점수 설정
+func set_score(peer_id: int, score: int) -> void:
+	var target: ScoreBoardItem = container.get_node(str(peer_id))
+	target.set_score(score)
