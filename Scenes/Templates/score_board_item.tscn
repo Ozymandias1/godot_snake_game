@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://d0qnbeahat1mn"]
+
+[ext_resource type="Script" path="res://Scripts/ScoreBoardItem.gd" id="1_cs0nu"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_slinn"]
+properties/0/path = NodePath("Score:text")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("PlayerName:text")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="ScoreBoardItem" type="HBoxContainer"]
+script = ExtResource("1_cs0nu")
+
+[node name="Score" type="Label" parent="."]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "00000"
+horizontal_alignment = 1
+text_overrun_behavior = 1
+
+[node name="PlayerName" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Player"
+text_overrun_behavior = 1
+
+[node name="ScoreBoardItemSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_slinn")

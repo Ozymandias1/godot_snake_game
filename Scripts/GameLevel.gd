@@ -8,6 +8,7 @@ extends Node
 @onready var label_timer: Label = $UI/LabelTimerRoot/LabelTimer
 @onready var start_game_timer: Timer = $UI/StartGameTimer
 @onready var food_spawn_timer: Timer = $FoodSpawner/Timer
+@onready var score_board_item_spawner: MultiplayerSpawner = $UI/ScoreBoard/ScoreBoardItemSpawner
 
 var start_game_remain_time: int = 4
 var remain_time_tween: Tween = null
@@ -44,6 +45,12 @@ func _on_player_connected(peer_id: int, player_data: Dictionary) -> void:
 	# 플레이어 머리 충돌 처리 시그널 처리 등록
 	player.on_player_head_area2d_entered.connect(self._on_player_head_area2d_entered)
 	player.on_player_reset_complete.connect(self._on_player_reset_complete)
+	
+	# 점수판
+	score_board_item_spawner.spawn({
+		"peer_id": peer_id,
+		"player_data": player_data
+	})
 
 # 게임 시작 버튼
 func _on_btn_start_game_pressed() -> void:

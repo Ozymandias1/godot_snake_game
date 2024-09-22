@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://drk5f5ngmiwx5"]
+[gd_scene load_steps=7 format=3 uid="uid://drk5f5ngmiwx5"]
 
 [ext_resource type="Script" path="res://Scripts/GameLevel.gd" id="1_crwjw"]
 [ext_resource type="PackedScene" uid="uid://ie288gw0t40c" path="res://Scenes/Templates/screen_boundary.tscn" id="2_7atmv"]
 [ext_resource type="Script" path="res://Scripts/PlayerSpawner.gd" id="3_7togj"]
 [ext_resource type="Script" path="res://Scripts/FoodSpawner.gd" id="4_x5dai"]
+[ext_resource type="Script" path="res://Scripts/ScoreBoardItemSpawner.gd" id="6_iuqw8"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_2gsxc"]
 properties/0/path = NodePath("LabelTimerRoot/LabelTimer:text")
@@ -108,8 +109,8 @@ layout_mode = 1
 anchors_preset = 0
 offset_left = 26.0
 offset_top = 26.0
-offset_right = 226.0
-offset_bottom = 326.0
+offset_right = 187.0
+offset_bottom = 166.0
 
 [node name="Background" type="ColorRect" parent="UI/ScoreBoard"]
 layout_mode = 1
@@ -120,7 +121,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.392157)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/ScoreBoard"]
+[node name="Container" type="VBoxContainer" parent="UI/ScoreBoard"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -128,10 +129,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="UI/ScoreBoard/VBoxContainer"]
+[node name="Label" type="Label" parent="UI/ScoreBoard/Container"]
 layout_mode = 2
 text = "Score"
 horizontal_alignment = 1
+
+[node name="ScoreBoardItemSpawner" type="MultiplayerSpawner" parent="UI/ScoreBoard"]
+_spawnable_scenes = PackedStringArray("res://Scenes/Templates/score_board_item.tscn")
+spawn_path = NodePath("../Container")
+script = ExtResource("6_iuqw8")
 
 [connection signal="timeout" from="FoodSpawner/Timer" to="FoodSpawner" method="_on_timer_timeout"]
 [connection signal="pressed" from="UI/BtnStartGame" to="." method="_on_btn_start_game_pressed"]
