@@ -12,14 +12,28 @@ func _ready() -> void:
 func _spawn_score_board_item(spawn_data: Dictionary) -> Node:
 	var peer_id: int = spawn_data["peer_id"]
 	var player_data: Dictionary = spawn_data["player_data"]
-	
+
 	var item: ScoreBoardItem = SCORE_BOARD_ITEM_TEMPLATE.instantiate()
 	item.name = str(peer_id)
 	item.set_player_name(player_data["name"])
-	
+
 	return item
 
 # 점수 설정
 func set_score(peer_id: int, score: int) -> void:
 	var target: ScoreBoardItem = container.get_node(str(peer_id))
-	target.set_score(score)
+	target.set_score.rpc(score)
+
+# 결과 얻기(점수 큰 순서로)
+func get_results() -> Array[ScoreBoardItem]:
+	var score_items: Array[ScoreBoardItem] = []
+	for child in container.get_children():
+		if is_instance_of(child, ScoreBoardItem):
+			score_items.append(child)
+
+	score_items.sort_custom(
+		func (a: ScoreBoardItem, b: ScoreBoardItem):
+			return a.score > b.score
+	)
+
+	return score_items

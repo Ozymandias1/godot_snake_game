@@ -9,10 +9,15 @@ extends Node
 @onready var start_game_timer: Timer = $UI/StartGameTimer
 @onready var food_spawn_timer: Timer = $FoodSpawner/Timer
 @onready var score_board_item_spawner: MultiplayerSpawner = $UI/ScoreBoard/ScoreBoardItemSpawner
+@onready var label_remain_time: Label = $UI/LabelRemainTime
+@onready var gameplay_timer: Timer = $UI/LabelRemainTime/GameplayTimer
+@onready var result: Control = $UI/Result
+@onready var label_result_score: Label = $UI/Result/LabelResultScore
 
 var start_game_remain_time: int = 4
 var remain_time_tween: Tween = null
 var scores: Dictionary = {}
+var remain_time_seconds: int = 5# * 60
 
 # 시작
 func _ready() -> void:
@@ -20,7 +25,7 @@ func _ready() -> void:
 	var viewport_rect = get_viewport().size
 	label_timer_root.global_position = Vector2(viewport_rect.x * 0.5, viewport_rect.y * 0.5)
 
-	# 시작버튼 숨김
+	# 서버가 아닐 경우 시작버튼 숨김
 	btn_start_game.visible = multiplayer.is_server()
 
 	# 서버일경우
@@ -93,6 +98,14 @@ func _do_remain_time_animation(is_hide: bool = false) -> void:
 func _start_game() -> void:
 	for player in players.get_children():
 		player.start_move()
+	gameplay_timer.start()
+
+# 게임 중지
+@rpc("any_peer", "call_local")
+func _stop_game() -> void:
+	for player in players.get_children():
+		player.stop_move()
+	gameplay_timer.stop()
 
 # 플레이어 머리 충돌 처리
 func _on_player_head_area2d_entered(peer_id: int, player: Player, other: Area2D) -> void:
@@ -121,3 +134,20 @@ func _on_player_reset_complete(peer_id: int, player: Player) -> void:
 	player.add_body.rpc_id(peer_id, true)
 	await get_tree().create_timer(0.1).timeout
 	player.start_move.rpc()
+
+# 게임플레이 타이머
+func _on_gameplay_timer_timeout() -> void:
+	remain_time_seconds -= 1
+
+	if remain_time_seconds == 0:
+		label_result_score.text = "Game Over"
+		var results: Array[ScoreBoardItem] = score_board_item_spawner.get_results()
+		for item in results:
+			label_result_score.text += "\n" + item.get_score_text()
+		result.visible = true
+		self._stop_game.rpc()
+
+	var seconds = remain_time_seconds % 60
+	var minutes = (int)(remain_time_seconds / 60.0) % 60
+	var timer_string = "%02d:%02d" % [minutes, seconds] # 텍스트를 분:초 형식으로 표현
+	label_remain_time.text = timer_string

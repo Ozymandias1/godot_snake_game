@@ -79,6 +79,15 @@ func start_move() -> void:
 	for i in range(1, self.body_list.size()):
 		self.body_list[i].get_node("FollowComponent").process_mode = Node.PROCESS_MODE_INHERIT
 
+# 플레이어 이동, 조작 중지
+@rpc("any_peer", "call_local")
+func stop_move() -> void:
+	self._set_control_process_mode(Node.PROCESS_MODE_DISABLED)
+	self._set_collision_disable(true)
+	
+	for i in range(1, self.body_list.size()):
+		self.body_list[i].get_node("FollowComponent").process_mode = Node.PROCESS_MODE_DISABLED
+
 # 머리 area2d 충돌 처리
 func _on_head_area2d_entered(other_area: Area2D) -> void:
 	on_player_head_area2d_entered.emit(self.name.to_int(), self, other_area)

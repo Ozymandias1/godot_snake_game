@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://drk5f5ngmiwx5"]
+[gd_scene load_steps=8 format=3 uid="uid://drk5f5ngmiwx5"]
 
 [ext_resource type="Script" path="res://Scripts/GameLevel.gd" id="1_crwjw"]
 [ext_resource type="PackedScene" uid="uid://ie288gw0t40c" path="res://Scenes/Templates/screen_boundary.tscn" id="2_7atmv"]
@@ -22,6 +22,17 @@ properties/3/replication_mode = 1
 properties/4/path = NodePath("LabelTimerRoot/LabelTimer:modulate")
 properties/4/spawn = true
 properties/4/replication_mode = 1
+properties/5/path = NodePath("LabelRemainTime:text")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_b7ans"]
+properties/0/path = NodePath(".:visible")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("LabelResultScore:text")
+properties/1/spawn = true
+properties/1/replication_mode = 1
 
 [node name="GameLevel" type="Node"]
 script = ExtResource("1_crwjw")
@@ -139,6 +150,68 @@ _spawnable_scenes = PackedStringArray("res://Scenes/Templates/score_board_item.t
 spawn_path = NodePath("../Container")
 script = ExtResource("6_iuqw8")
 
+[node name="LabelRemainTime" type="Label" parent="UI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.5
+offset_top = 32.0
+offset_right = 20.5
+offset_bottom = 55.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 50
+text = "05:00"
+horizontal_alignment = 1
+
+[node name="GameplayTimer" type="Timer" parent="UI/LabelRemainTime"]
+
+[node name="Result" type="Control" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LabelResultScore" type="Label" parent="UI/Result"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 70
+horizontal_alignment = 1
+
+[node name="BtnRestart" type="Button" parent="UI/Result"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -91.5
+offset_top = -87.0
+offset_right = 91.5
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 50
+text = "Restart"
+
+[node name="ResultSynchronizer" type="MultiplayerSynchronizer" parent="UI"]
+root_path = NodePath("../Result")
+replication_config = SubResource("SceneReplicationConfig_b7ans")
+
 [connection signal="timeout" from="FoodSpawner/Timer" to="FoodSpawner" method="_on_timer_timeout"]
 [connection signal="pressed" from="UI/BtnStartGame" to="." method="_on_btn_start_game_pressed"]
 [connection signal="timeout" from="UI/StartGameTimer" to="." method="_on_start_game_timer_timeout"]
+[connection signal="timeout" from="UI/LabelRemainTime/GameplayTimer" to="." method="_on_gameplay_timer_timeout"]
