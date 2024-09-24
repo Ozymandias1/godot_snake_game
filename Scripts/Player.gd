@@ -106,19 +106,31 @@ func reset() -> void:
 	# 권한이 필요한 작업 처리
 	await get_tree().create_timer(blink_time * blink_count).timeout
 	# 머리를 제외한 몸체 제거
+	self.clear_bodies()
+	# 플레이어 위치 초기화
+	self.reset_position()
+	
+	# 리셋 시그널 발동
+	on_player_reset_complete.emit(self.name.to_int(), self)
+
+# 몸체 모두 제거
+@rpc("any_peer", "call_local")
+func clear_bodies() -> void:
+	# 머리를 제외한 몸체 제거
 	var body_count: int = self.body_list.size()
 	for i in range(body_count-1): # 몸체 목록에서 머리를 제외한 개수만큼 1번째것을 제거한다(리스트에서도 제거를 하므로)
 		if is_multiplayer_authority(): # 실제 몸체 제거 함수 호출은 권한이 있는 피어만 수행하고 나머지는 body_list의 항목 제거만 수행
 			var del_body = self.body_list[1]
 			del_body.queue_free()
 		self.body_list.remove_at(1)
+
+# 플레이어 초기 위치로
+@rpc("any_peer", "call_local")
+func reset_position() -> void:
 	if is_multiplayer_authority():
 		# 초기위치로
 		head.global_position = initial_state["location"]
 		head.rotation = initial_state["angle"]
-
-	# 리셋 시그널 발동
-	on_player_reset_complete.emit(self.name.to_int(), self)
 
 # 스프라이트 투명도 설정
 @rpc("any_peer", "call_local")

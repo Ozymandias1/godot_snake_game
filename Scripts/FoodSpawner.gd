@@ -29,3 +29,8 @@ func _on_timer_timeout() -> void:
 	if multiplayer.is_server():
 		if foods_root.get_child_count() < 10:
 			self.spawn({})
+
+# 모든 음식 제거
+func clear_all_foods() -> void:
+	for child in foods_root.get_children():
+		child.queue_free()
