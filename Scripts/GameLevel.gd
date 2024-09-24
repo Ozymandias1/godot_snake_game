@@ -70,7 +70,6 @@ func _on_player_disconnected(peer_id: int) -> void:
 	# 점수판 제거
 	scores.erase(peer_id)
 	score_board_item_spawner.delete_scoreboard_item(peer_id)
-	
 
 # 게임 시작 버튼
 func _on_btn_start_game_pressed() -> void:

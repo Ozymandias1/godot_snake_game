@@ -9,6 +9,7 @@ var my_player_data: Dictionary = {}
 func _ready() -> void:
 	multiplayer.connected_to_server.connect(self._on_connected_to_server)
 	multiplayer.peer_disconnected.connect(self._on_peer_disconnected)
+	multiplayer.server_disconnected.connect(self._on_server_disconnected)
 
 # 서버 접속 성공
 func _on_connected_to_server() -> void:
@@ -18,6 +19,12 @@ func _on_connected_to_server() -> void:
 # 플레이어 접속 해제 시그널
 func _on_peer_disconnected(peer_id: int) -> void:
 	self.on_player_disconnected.emit(peer_id)
+
+# 서버 접속 종료 시그널
+func _on_server_disconnected() -> void:
+	multiplayer.multiplayer_peer = null
+	OS.alert("서버가 게임을 종료하였습니다.", "게임종료")
+	get_tree().quit()
 
 # 접속한 피어로부터 플레이어 정보 수신
 @rpc("any_peer", "call_local")

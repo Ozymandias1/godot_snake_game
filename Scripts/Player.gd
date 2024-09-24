@@ -26,10 +26,6 @@ func _enter_tree() -> void:
 func _process(_delta: float) -> void:
 	name_tag_root.global_position = head.global_position + (Vector2.UP * 16)
 
-	# 테스트
-	if is_multiplayer_authority() and Input.is_action_just_released("TestKey"):
-		self.reset()
-
 # 플레이어 초기화
 func initialize(player_data: Dictionary, state: Dictionary) -> void:
 	$NameTagRoot/NameTag.text = player_data["name"]
