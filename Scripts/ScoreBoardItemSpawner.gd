@@ -7,6 +7,10 @@ const SCORE_BOARD_ITEM_TEMPLATE = preload("res://Scenes/Templates/score_board_it
 # 시작
 func _ready() -> void:
 	self.spawn_function = self._spawn_score_board_item
+	self.despawned.connect(self._on_despawn_body)
+
+func _on_despawn_body(node: Node) -> void:
+	print_debug("ScoreBoardItemSpawner.gd _on_despawn_body -> ", node.name)
 
 # 스폰 함수
 func _spawn_score_board_item(spawn_data: Dictionary) -> Node:

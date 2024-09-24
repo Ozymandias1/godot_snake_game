@@ -23,8 +23,8 @@ func _on_peer_disconnected(peer_id: int) -> void:
 # 서버 접속 종료 시그널
 func _on_server_disconnected() -> void:
 	multiplayer.multiplayer_peer = null
-	OS.alert("서버가 게임을 종료하였습니다.", "게임종료")
-	get_tree().quit()
+	#OS.alert("서버가 게임을 종료하였습니다.", "게임종료")
+	#get_tree().quit()
 
 # 접속한 피어로부터 플레이어 정보 수신
 @rpc("any_peer", "call_local")
