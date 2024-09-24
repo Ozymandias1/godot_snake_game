@@ -33,6 +33,7 @@ func _ready() -> void:
 	# 서버일경우
 	if multiplayer.is_server():
 		NetworkManager.on_player_connected.connect(self._on_player_connected)
+		NetworkManager.on_player_disconnected.connect(self._on_player_disconnected)
 		self._on_player_connected(1, NetworkManager.my_player_data)
 
 # 플레이어 접속 처리
@@ -55,6 +56,21 @@ func _on_player_connected(peer_id: int, player_data: Dictionary) -> void:
 		"peer_id": peer_id,
 		"player_data": player_data
 	})
+
+# 플레이어 접속 종료 처리
+func _on_player_disconnected(peer_id: int) -> void:
+	# 플레이어 제거
+	var del_player: Player = players.get_node(str(peer_id))
+	# 시그널 연결 해제
+	del_player.on_player_head_area2d_entered.disconnect(self._on_player_head_area2d_entered)
+	del_player.on_player_reset_complete.disconnect(self._on_player_reset_complete)
+	# 제거
+	del_player.queue_free.call_deferred()
+	
+	# 점수판 제거
+	scores.erase(peer_id)
+	score_board_item_spawner.delete_scoreboard_item(peer_id)
+	
 
 # 게임 시작 버튼
 func _on_btn_start_game_pressed() -> void:

@@ -2,16 +2,22 @@
 extends Node
 
 signal on_player_connected(peer_id: int, player_data: Dictionary)
+signal on_player_disconnected(peer_id: int)
 
 var my_player_data: Dictionary = {}
 
 func _ready() -> void:
 	multiplayer.connected_to_server.connect(self._on_connected_to_server)
+	multiplayer.peer_disconnected.connect(self._on_peer_disconnected)
 
 # 서버 접속 성공
 func _on_connected_to_server() -> void:
-	# 서버 접속 성공시 서버로 내 플레이어 정보를 전송한다
+	# 서버 접속 성공시 서버로(peer_id->1) 내 플레이어 정보를 전송한다
 	self.receive_player_data.rpc_id(1, self.my_player_data)
+
+# 플레이어 접속 해제 시그널
+func _on_peer_disconnected(peer_id: int) -> void:
+	self.on_player_disconnected.emit(peer_id)
 
 # 접속한 피어로부터 플레이어 정보 수신
 @rpc("any_peer", "call_local")

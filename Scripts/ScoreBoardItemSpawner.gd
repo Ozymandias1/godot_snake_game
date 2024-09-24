@@ -37,3 +37,8 @@ func get_results() -> Array[ScoreBoardItem]:
 	)
 
 	return score_items
+
+# 점수판 항목 제거
+func delete_scoreboard_item(peer_id) -> void:
+	var del_item: ScoreBoardItem = container.get_node(str(peer_id))
+	del_item.queue_free.call_deferred()
