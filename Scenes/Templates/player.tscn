@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://cc2l7qw4e2q0n"]
+[gd_scene load_steps=13 format=3 uid="uid://cc2l7qw4e2q0n"]
 
 [ext_resource type="Texture2D" uid="uid://b34c6yrpj3p8w" path="res://Textures/face.png" id="1_eifjw"]
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_sxmqb"]
 [ext_resource type="Texture2D" uid="uid://cd0ts2gutcjrv" path="res://Textures/face_eye.png" id="2_ky4h1"]
 [ext_resource type="Texture2D" uid="uid://d03wu8b0mi7rx" path="res://Textures/face_outline.png" id="3_l0kde"]
+[ext_resource type="Texture2D" uid="uid://ce40oyftxdhr5" path="res://Textures/Arrow.png" id="5_0gqqn"]
 [ext_resource type="Script" path="res://Scripts/BodySpawner.gd" id="5_wpes1"]
 [ext_resource type="Script" path="res://Scripts/SteeringComponent.gd" id="6_m76wp"]
 [ext_resource type="Script" path="res://Scripts/MoveComponent.gd" id="7_g2xs4"]
@@ -46,6 +47,11 @@ collision_mask = 14
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Head/Area2D_Head"]
 shape = SubResource("CircleShape2D_1sret")
+
+[node name="Arrow" type="Sprite2D" parent="Head"]
+position = Vector2(35, 0)
+scale = Vector2(0.05, 0.1)
+texture = ExtResource("5_0gqqn")
 
 [node name="PlayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_7jt5j")
