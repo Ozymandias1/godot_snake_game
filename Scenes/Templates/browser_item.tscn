@@ -1,6 +1,9 @@
-[gd_scene format=3 uid="uid://q2ro1wac2ca4"]
+[gd_scene load_steps=2 format=3 uid="uid://q2ro1wac2ca4"]
+
+[ext_resource type="Script" path="res://Scripts/BrowserItem.gd" id="1_xhvpx"]
 
 [node name="BrowserItem" type="HBoxContainer"]
+script = ExtResource("1_xhvpx")
 
 [node name="ServerName" type="Label" parent="."]
 layout_mode = 2
@@ -14,3 +17,5 @@ custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Join"
+
+[connection signal="pressed" from="BtnJoin" to="." method="_on_btn_join_pressed"]

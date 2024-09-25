@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://ddtpshcub0l6n"]
+[gd_scene load_steps=2 format=3 uid="uid://ddtpshcub0l6n"]
 
 [ext_resource type="Script" path="res://Scripts/JoinServer.gd" id="1_j35sg"]
-[ext_resource type="PackedScene" uid="uid://q2ro1wac2ca4" path="res://Scenes/Templates/browser_item.tscn" id="1_ol0lr"]
 
 [node name="JoinServer" type="Control"]
 layout_mode = 3
@@ -85,7 +84,6 @@ horizontal_alignment = 2
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
-text = "127.0.0.1"
 alignment = 1
 
 [node name="PortContainer" type="HBoxContainer" parent="TabContainer/IP Address/Controls"]
@@ -103,7 +101,6 @@ horizontal_alignment = 2
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
-text = "8080"
 alignment = 1
 
 [node name="BtnJoinIP" type="Button" parent="TabContainer/IP Address/Controls"]
@@ -128,12 +125,6 @@ grow_vertical = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="BrowserItem" parent="TabContainer/Server Browser (LAN)/ScrollContainer/BrowserItemContainer" instance=ExtResource("1_ol0lr")]
-layout_mode = 2
-
-[node name="BrowserItem2" parent="TabContainer/Server Browser (LAN)/ScrollContainer/BrowserItemContainer" instance=ExtResource("1_ol0lr")]
-layout_mode = 2
-
 [node name="BtnRefresh" type="Button" parent="."]
 custom_minimum_size = Vector2(100, 80)
 layout_mode = 1
@@ -153,3 +144,4 @@ text = "Refresh"
 
 [connection signal="pressed" from="BtnBack" to="." method="_on_btn_back_pressed"]
 [connection signal="pressed" from="TabContainer/IP Address/Controls/BtnJoinIP" to="." method="_on_btn_join_ip_pressed"]
+[connection signal="pressed" from="BtnRefresh" to="." method="_on_btn_refresh_pressed"]

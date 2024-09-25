@@ -15,4 +15,8 @@ func _on_btn_back_pressed() -> void:
 
 # Create 버튼 클릭
 func _on_btn_create_pressed() -> void:
+	if self.server_name.text.is_empty() or self.port_number.text.is_empty():
+		OS.alert("Invalid Server Info.")
+		return
+		
 	self.on_btn_create_pressed.emit(self.server_name.text, self.port_number.text.to_int())
