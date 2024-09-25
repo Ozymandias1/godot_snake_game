@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dy8fyk5jra6k8"]
+[gd_scene load_steps=8 format=3 uid="uid://dy8fyk5jra6k8"]
 
 [ext_resource type="PackedScene" uid="uid://dv872npqj6t43" path="res://Scenes/Title.tscn" id="1_7ivgv"]
 [ext_resource type="Script" path="res://Scripts/RootScene.gd" id="1_r0ne1"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://d0xffw3a00yqe" path="res://Scenes/ServerSetup.tscn" id="4_txrkp"]
 [ext_resource type="PackedScene" uid="uid://ddtpshcub0l6n" path="res://Scenes/JoinServer.tscn" id="5_d5w3x"]
 [ext_resource type="Script" path="res://Scripts/GameLevelSpawner.gd" id="6_h6y2x"]
+[ext_resource type="PackedScene" uid="uid://d2w7wo7i31etb" path="res://Scenes/TryConnect.tscn" id="6_yr8y2"]
 
 [node name="RootScene" type="Node"]
 script = ExtResource("1_r0ne1")
@@ -33,6 +34,10 @@ layout_mode = 1
 visible = false
 layout_mode = 1
 
+[node name="TryConnect" parent="UI" instance=ExtResource("6_yr8y2")]
+visible = false
+layout_mode = 1
+
 [node name="GameLevel" type="Node" parent="."]
 
 [node name="GameLevelSpawner" type="MultiplayerSpawner" parent="."]
@@ -49,3 +54,4 @@ script = ExtResource("6_h6y2x")
 [connection signal="on_btn_create_pressed" from="UI/ServerSetup" to="." method="_on_server_setup_btn_create_pressed"]
 [connection signal="on_btn_back_pressed" from="UI/JoinServer" to="." method="_on_join_server_on_btn_back_pressed"]
 [connection signal="on_server_join_procced" from="UI/JoinServer" to="." method="_on_join_server_procced"]
+[connection signal="on_btn_back_pressed" from="UI/TryConnect" to="." method="_on_try_connect_on_btn_back_pressed"]

@@ -6,6 +6,12 @@ extends Node
 @onready var server_setup: Control = $UI/ServerSetup
 @onready var join_server: Control = $UI/JoinServer
 @onready var game_level_spawner: MultiplayerSpawner = $GameLevelSpawner
+@onready var try_connect: Control = $UI/TryConnect
+
+# 시작
+func _ready() -> void:
+	NetworkManager.on_server_connection_ok.connect(self._on_connect_ok)
+	NetworkManager.on_server_connection_failed.connect(self._on_connect_failed)
 
 #region Title 화면
 # StartGame 버튼 클릭
@@ -72,5 +78,23 @@ func _on_join_server_on_btn_back_pressed() -> void:
 func _on_join_server_procced(ip: String, port: int) -> void:
 	self.join_server.hide()
 	
+	self.try_connect.set_notice_text("Connect to \"%s\"..." % ip)
+	self.try_connect.show()
+	
 	NetworkManager.join_server(ip, port)
+#endregion
+
+#region TryConnect 화면
+# TryConnect 화면 서버 접속 성공시
+func _on_connect_ok() -> void:
+	self.try_connect.hide()
+
+# TryConnect 화면 서버 접속 실패시
+func _on_connect_failed() -> void:
+	self.try_connect.set_notice_text("Connection failed.")
+
+# TryConnect-Back 버튼 클릭
+func _on_try_connect_on_btn_back_pressed() -> void:
+	self.try_connect.hide()
+	self.join_server.show()
 #endregion

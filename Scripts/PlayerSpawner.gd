@@ -15,10 +15,6 @@ const initial_state: Array[Dictionary] = [
 # 시작
 func _ready() -> void:
 	self.spawn_function = self._spawn_player
-	self.despawned.connect(self._on_despawn_body)
-
-func _on_despawn_body(node: Node) -> void:
-	print_debug("PlayerSpawner.gd _on_despawn_body -> ", node.name)
 
 # 플레이어 스폰 함수
 func _spawn_player(spawn_data: Dictionary) -> Node:

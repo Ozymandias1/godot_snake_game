@@ -4,12 +4,18 @@ extends Node
 signal on_player_connected(peer_id: int, player_data: Dictionary)
 signal on_player_disconnected(peer_id: int)
 
+signal on_server_connection_ok
+signal on_server_connection_failed
+
 var my_player_data: Dictionary = {}
 
 func _ready() -> void:
 	multiplayer.connected_to_server.connect(self._on_connected_to_server)
 	multiplayer.peer_disconnected.connect(self._on_peer_disconnected)
 	multiplayer.server_disconnected.connect(self._on_server_disconnected)
+
+	multiplayer.connected_to_server.connect(self._on_connection_ok)
+	multiplayer.connection_failed.connect(self._on_connection_failed)
 
 # 서버 접속 성공
 func _on_connected_to_server() -> void:
@@ -38,7 +44,7 @@ func create_server(_server_name: String, port: int) -> void:
 	var error = peer.create_server(port, 4)
 	if error:
 		printerr("NetworkManager.gd create_server() -> ", error)
-		
+
 	multiplayer.multiplayer_peer = peer
 	self.on_player_connected.emit(1, self.my_player_data)
 
@@ -48,6 +54,15 @@ func join_server(ip: String, port: int) -> void:
 	var error = peer.create_client(ip, port)
 	if error:
 		printerr("NetworkManager.gd join_server() -> ", error)
-		
+
+	peer.get_peer(1).set_timeout(0, 0, 5000) # 5초내 접속안되면 실패처리하기 위한 설정
+
 	multiplayer.multiplayer_peer = peer
-	
+
+# 서버 접속 성공
+func _on_connection_ok() -> void:
+	on_server_connection_ok.emit()
+
+# 서버 접속 실패
+func _on_connection_failed() -> void:
+	on_server_connection_failed.emit()

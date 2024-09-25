@@ -9,10 +9,6 @@ var spawn_counter: int = 0
 # 시작
 func _ready() -> void:
 	self.spawn_function = self._spawn_food
-	self.despawned.connect(self._on_despawn_body)
-
-func _on_despawn_body(node: Node) -> void:
-	print_debug("FoodSPawner.gd _on_despawn_body -> ", node.name)
 	
 # 음식 스폰
 func _spawn_food(_spawn_data: Dictionary) -> Node:

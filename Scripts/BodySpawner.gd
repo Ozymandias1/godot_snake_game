@@ -1,3 +1,4 @@
+# BodySpawner.gd
 extends MultiplayerSpawner
 
 const BODY_TEMPLATE = preload("res://Scenes/Templates/body.tscn")
@@ -5,10 +6,6 @@ var player: Player = null
 
 func _ready() -> void:
 	self.spawn_function = self._spawn_body
-	self.despawned.connect(self._on_despawn_body)
-
-func _on_despawn_body(node: Node) -> void:
-	print_debug("BodySpawner.gd _on_despawn_body -> ", node.name)
 
 func _spawn_body(spawn_data: Dictionary) -> Node:
 	var peer_id: int = spawn_data["peer_id"]
