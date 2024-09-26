@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 NetworkManager="*res://Scripts/NetworkManager.gd"
+SfxManager="*res://Scripts/SFXManager.gd"
 
 [display]
 

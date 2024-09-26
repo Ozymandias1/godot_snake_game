@@ -73,6 +73,7 @@ func _on_player_disconnected(peer_id: int) -> void:
 
 # 게임 시작 버튼
 func _on_btn_start_game_pressed() -> void:
+	SfxManager.play("Click")
 	self.food_spawn_timer.start()
 	self.btn_start_game.hide()
 	self.start_game_timer.start()
@@ -165,6 +166,7 @@ func _on_gameplay_timer_timeout() -> void:
 
 # 재시작 버튼 클릭
 func _on_btn_restart_pressed() -> void:
+	SfxManager.play("Click")
 	# 플레이어 초기화
 	for player in players.get_children():
 		player.stop_move.rpc()

@@ -11,10 +11,12 @@ signal on_btn_create_pressed(server_name: String, port: int)
 
 # Back 버튼 클릭
 func _on_btn_back_pressed() -> void:
+	SfxManager.play("Click")
 	self.on_btn_back_pressed.emit()
 
 # Create 버튼 클릭
 func _on_btn_create_pressed() -> void:
+	SfxManager.play("Click")
 	if self.server_name.text.is_empty() or self.port_number.text.is_empty():
 		OS.alert("Invalid Server Info.")
 		return

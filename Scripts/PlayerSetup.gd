@@ -59,6 +59,7 @@ func _on_color_picker_color_changed(color: Color) -> void:
 
 # Random Color 버튼 클릭 시그널
 func _on_btn_random_color_pressed() -> void:
+	SfxManager.play("Click")
 	# 각 파트별 랜덤 색상 처리
 	var color = Color(randf(), randf(), randf())
 	self.face_color_rect.modulate = color
@@ -77,10 +78,12 @@ func _on_btn_random_color_pressed() -> void:
 
 # Back 버튼 클릭 시그널
 func _on_btn_back_pressed() -> void:
+	SfxManager.play("Click")
 	self.on_btn_back_pressed.emit()
 
 # Create 버튼 클릭 시그널
 func _on_btn_create_pressed() -> void:
+	SfxManager.play("Click")
 	if self.player_name.text.is_empty():
 		OS.alert("Invalid Player Name.")
 		return
@@ -89,6 +92,7 @@ func _on_btn_create_pressed() -> void:
 
 # Join 버튼 클릭 시그널
 func _on_btn_join_pressed() -> void:
+	SfxManager.play("Click")
 	if self.player_name.text.is_empty():
 		OS.alert("Invalid Player Name.")
 		return

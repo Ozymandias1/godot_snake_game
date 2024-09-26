@@ -18,10 +18,12 @@ func _ready() -> void:
 
 # Back 버튼 클릭
 func _on_btn_back_pressed() -> void:
+	SfxManager.play("Click")
 	on_btn_back_pressed.emit()
 
 # IP, Port 직접 입력하여 서버 조인
 func _on_btn_join_ip_pressed() -> void:
+	SfxManager.play("Click")
 	var ip: String = line_edit_ip.text
 	var port: int = line_edit_port.text.to_int()
 	
@@ -33,6 +35,7 @@ func _on_btn_join_ip_pressed() -> void:
 
 # Refresh 버튼 클릭
 func _on_btn_refresh_pressed() -> void:
+	SfxManager.play("Click")
 	NetworkManager.start_get_server_info()
 	self.btn_refresh.disabled = true
 
@@ -57,6 +60,7 @@ func _on_server_detected(ip: String, server_info: Dictionary) -> void:
 
 # 서버 브라우져에서 Join 버튼 클릭 처리
 func _on_join_server_from_server_browser(server_data: Dictionary) -> void:
+	SfxManager.play("Click")
 	var ip: String = server_data["ip"]
 	var port: int = server_data["gameplay_port"]
 	on_server_join_procced.emit(ip, port)

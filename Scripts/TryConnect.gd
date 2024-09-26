@@ -11,4 +11,5 @@ func set_notice_text(text: String) -> void:
 
 # Back 버튼 클릭 시그널
 func _on_btn_back_pressed() -> void:
+	SfxManager.play("Click")
 	self.on_btn_back_pressed.emit()
