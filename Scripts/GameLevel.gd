@@ -85,11 +85,13 @@ func _on_start_game_timer_timeout() -> void:
 
 	start_game_remain_time -= 1
 	if start_game_remain_time == 0:
+		SfxManager.play.rpc("Begin")
 		self.label_timer.text = "Game Started"
 		self.label_timer_root.scale = Vector2(1.3, 1.3)
 		self._do_remain_time_animation(true)
 		self.start_game_timer.stop()
 	else:
+		SfxManager.play.rpc(str(start_game_remain_time))
 		self.label_timer.text = str(start_game_remain_time)
 		self.label_timer_root.scale = Vector2(1.3, 1.3)
 		self._do_remain_time_animation()
@@ -151,6 +153,7 @@ func _on_gameplay_timer_timeout() -> void:
 
 	# 게임 진행시간이 다되면 점수를 높은순서로 취합하여 텍스트로 보여준다
 	if gameplay_time_seconds == 0:
+		SfxManager.play.rpc("GameOver")
 		label_result_score.text = "Game Over"
 		var results: Array[ScoreBoardItem] = score_board_item_spawner.get_results()
 		for item in results:
