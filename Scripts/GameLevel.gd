@@ -124,6 +124,7 @@ func _stop_game() -> void:
 func _on_player_head_area2d_entered(peer_id: int, player: Player, other: Area2D) -> void:
 	var is_food_item: bool = other.get_meta("is_food_item", false)
 	if is_food_item:
+		SfxManager.play.rpc_id(peer_id, "Eat")
 		player.add_body.rpc_id(peer_id, false)
 		other.queue_free.call_deferred()
 		# 점수

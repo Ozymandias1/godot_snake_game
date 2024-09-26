@@ -1,0 +1,22 @@
+[gd_scene load_steps=9 format=3 uid="uid://svtbx5i71t20"]
+
+[ext_resource type="AudioStream" uid="uid://ccq3lat0fvg1s" path="res://Audio/crunch.1.ogg" id="1_uwk81"]
+[ext_resource type="AudioStream" uid="uid://bmtnnkuesd6oa" path="res://Audio/crunch.2.ogg" id="2_5byqq"]
+[ext_resource type="AudioStream" uid="uid://ejnilkk1yw7s" path="res://Audio/crunch.3.ogg" id="3_l5xdn"]
+[ext_resource type="AudioStream" uid="uid://dl7b5k4d7xdo6" path="res://Audio/crunch.4.ogg" id="4_layhc"]
+[ext_resource type="AudioStream" uid="uid://dyvfstefqjmg2" path="res://Audio/crunch.5.ogg" id="5_5yxuy"]
+[ext_resource type="AudioStream" uid="uid://b0pk3csitkw47" path="res://Audio/crunch.6.ogg" id="6_eiil6"]
+[ext_resource type="AudioStream" uid="uid://eh1u2rjek4s2" path="res://Audio/crunch.7.ogg" id="7_ra1qq"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_lex0v"]
+streams_count = 7
+stream_0/stream = ExtResource("1_uwk81")
+stream_1/stream = ExtResource("2_5byqq")
+stream_2/stream = ExtResource("3_l5xdn")
+stream_3/stream = ExtResource("4_layhc")
+stream_4/stream = ExtResource("5_5yxuy")
+stream_5/stream = ExtResource("6_eiil6")
+stream_6/stream = ExtResource("7_ra1qq")
+
+[node name="Eat" type="AudioStreamPlayer2D"]
+stream = SubResource("AudioStreamRandomizer_lex0v")

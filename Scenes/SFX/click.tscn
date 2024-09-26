@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dei2l5k85kxxc"]
+
+[ext_resource type="AudioStream" uid="uid://cc8c7g56jncte" path="res://Audio/metalLatch.ogg" id="1_i4b5n"]
+
+[node name="Click" type="AudioStreamPlayer2D"]
+stream = ExtResource("1_i4b5n")
