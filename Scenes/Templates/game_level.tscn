@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://drk5f5ngmiwx5"]
+[gd_scene load_steps=12 format=3 uid="uid://drk5f5ngmiwx5"]
 
 [ext_resource type="Script" path="res://Scripts/GameLevel.gd" id="1_crwjw"]
 [ext_resource type="PackedScene" uid="uid://ie288gw0t40c" path="res://Scenes/Templates/screen_boundary.tscn" id="2_7atmv"]
@@ -9,8 +9,6 @@
 [ext_resource type="Texture2D" uid="uid://bs7a8p7nidd2u" path="res://Textures/keyboard_a_outline.svg" id="7_bwr3o"]
 [ext_resource type="Texture2D" uid="uid://c8ab6f0hkdorc" path="res://Textures/keyboard_arrow_left_outline.svg" id="8_ppmdm"]
 [ext_resource type="Texture2D" uid="uid://b0nrd8a886taq" path="res://Textures/keyboard_arrow_right_outline.svg" id="9_c8x5n"]
-[ext_resource type="Texture2D" uid="uid://gdj2ajipvrc1" path="res://Textures/keyboard_w_outline.svg" id="10_bgxyf"]
-[ext_resource type="Texture2D" uid="uid://cts81l24tb7cx" path="res://Textures/keyboard_arrow_up_outline.svg" id="11_6ie7c"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_2gsxc"]
 properties/0/path = NodePath("LabelTimerRoot/LabelTimer:text")
@@ -161,7 +159,7 @@ layout_mode = 1
 offset_left = 197.0
 offset_top = 26.0
 offset_right = 401.0
-offset_bottom = 110.0
+offset_bottom = 80.0
 
 [node name="Title" type="Label" parent="UI/Controls"]
 layout_mode = 1
@@ -216,27 +214,6 @@ expand_mode = 2
 [node name="Label" type="Label" parent="UI/Controls/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = ": Steering"
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="UI/Controls/VBoxContainer"]
-layout_mode = 2
-
-[node name="TextureRect2" type="TextureRect" parent="UI/Controls/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-texture = ExtResource("10_bgxyf")
-expand_mode = 2
-
-[node name="Label2" type="Label" parent="UI/Controls/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-text = ","
-
-[node name="TextureRect4" type="TextureRect" parent="UI/Controls/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-texture = ExtResource("11_6ie7c")
-expand_mode = 2
-
-[node name="Label" type="Label" parent="UI/Controls/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-text = ": Boost"
 
 [node name="LabelRemainTime" type="Label" parent="UI"]
 layout_mode = 1
