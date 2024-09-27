@@ -140,6 +140,10 @@ func _on_player_head_area2d_entered(peer_id: int, player: Player, other: Area2D)
 		if is_instance_of(other_player_body, Body):
 			self.scores[other_player_body.peer_id] += 5 # 충돌을 유발한 플레이어에게 5점 부여
 			self.score_board_item_spawner.set_score(other_player_body.peer_id, scores[other_player_body.peer_id])
+			
+			var other_player = self.players.get_node(str(other_player_body.peer_id))
+			if other_player != null:
+				other_player.trim_body.rpc(other_player_body.name)
 
 # 플레이어 리셋 완료 처리
 func _on_player_reset_complete(_peer_id: int, player: Player) -> void:

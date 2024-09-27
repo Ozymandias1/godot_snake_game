@@ -157,3 +157,25 @@ func _set_collision_disable(is_disable: bool) -> void:
 	for collision in collisions:
 		collision.set_deferred("disabled", is_disable)
 		#collision.disabled = is_disable
+
+# 이름에 해당하는 몸체 뒤부분 제거
+@rpc("any_peer", "call_local")
+func trim_body(body_name: String) -> void:
+	var body_index: int = self._find_body_index(body_name)
+	var del_count: int = self.body_list.size() - body_index
+	for i in range(del_count):
+		if is_multiplayer_authority():
+			var del_body = self.body_list[body_index]
+			del_body.queue_free()
+		self.body_list.remove_at(body_index)
+
+# 몸체 이름으로 body_list내 배열 인덱스 얻기
+func _find_body_index(body_name: String) -> int:
+	var find_index = -1
+	
+	for i in range(0, self.body_list.size()):
+		if self.body_list[i].name == body_name:
+			find_index = i
+			break
+			
+	return find_index
