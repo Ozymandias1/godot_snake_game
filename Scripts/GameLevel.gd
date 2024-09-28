@@ -45,6 +45,7 @@ func _on_player_connected(peer_id: int, player_data: Dictionary) -> void:
 
 	# 플레이어 생성시 몸체 3개 생성
 	await self._add_initial_player_bodies(3, player)
+	player.adjust_body_scale.rpc()
 
 	# 플레이어 머리 충돌 처리 시그널 처리 등록
 	player.on_player_head_area2d_entered.connect(self._on_player_head_area2d_entered)
@@ -144,6 +145,7 @@ func _on_player_head_area2d_entered(peer_id: int, player: Player, other: Area2D)
 			var other_player = self.players.get_node(str(other_player_body.peer_id))
 			if other_player != null:
 				other_player.trim_body.rpc(other_player_body.name)
+				other_player.adjust_body_scale.rpc()
 
 # 플레이어 리셋 완료 처리
 func _on_player_reset_complete(_peer_id: int, player: Player) -> void:

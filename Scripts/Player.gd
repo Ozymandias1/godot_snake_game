@@ -48,10 +48,11 @@ func initialize(player_data: Dictionary, state: Dictionary) -> void:
 @rpc("call_local", "any_peer")
 func add_body(is_paused: bool) -> void:
 	$BodySpawner.spawn({"peer_id": self.name.to_int(), "is_paused": is_paused})
-	self._adjust_body_scale()
+	self.adjust_body_scale.rpc()
 
 # 몸체 크기 조정
-func _adjust_body_scale() -> void:
+@rpc("call_local", "any_peer")
+func adjust_body_scale() -> void:
 	var scale_array: Array[Vector2] = [
 		Vector2.ONE * 0.5,
 		Vector2.ONE * 0.6,
