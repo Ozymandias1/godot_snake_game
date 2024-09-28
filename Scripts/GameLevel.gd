@@ -19,7 +19,7 @@ extends Node
 var start_game_remain_time: int = 4
 var remain_time_tween: Tween = null
 var scores: Dictionary = {}
-var gameplay_time_seconds: int = 5 * 60
+var gameplay_time_seconds: int = 5# * 60
 
 # 시작
 func _ready() -> void:
