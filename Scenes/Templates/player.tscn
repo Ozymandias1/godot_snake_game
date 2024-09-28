@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cc2l7qw4e2q0n"]
+[gd_scene load_steps=17 format=3 uid="uid://cc2l7qw4e2q0n"]
 
 [ext_resource type="Texture2D" uid="uid://b34c6yrpj3p8w" path="res://Textures/face.png" id="1_eifjw"]
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_sxmqb"]
@@ -10,6 +10,10 @@
 [ext_resource type="Script" path="res://Scripts/MoveComponent.gd" id="7_g2xs4"]
 [ext_resource type="Script" path="res://Scripts/MarkingComponent.gd" id="8_ycktu"]
 [ext_resource type="Script" path="res://Scripts/FlipComponent.gd" id="9_wf64i"]
+[ext_resource type="Script" path="res://Scripts/BoostComponent.gd" id="11_sdqco"]
+[ext_resource type="Texture2D" uid="uid://bywy4u24pwvg2" path="res://Textures/boost_under.png" id="12_fth7c"]
+[ext_resource type="Texture2D" uid="uid://c3u2qqjxoxlwv" path="res://Textures/boost_normal.png" id="13_lbwfd"]
+[ext_resource type="Texture2D" uid="uid://bd48g4tjtt3w" path="res://Textures/boost_not_available.png" id="14_mjcwr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1sret"]
 radius = 16.0
@@ -89,11 +93,12 @@ script = ExtResource("6_m76wp")
 player = NodePath("..")
 target = NodePath("../Head")
 
-[node name="MoveComponent" type="Node" parent="." node_paths=PackedStringArray("player", "target")]
+[node name="MoveComponent" type="Node" parent="." node_paths=PackedStringArray("player", "target", "boost")]
 process_mode = 4
 script = ExtResource("7_g2xs4")
 player = NodePath("..")
 target = NodePath("../Head")
+boost = NodePath("../BoostComponent")
 
 [node name="MarkingComponent" type="Node" parent="." node_paths=PackedStringArray("target")]
 script = ExtResource("8_ycktu")
@@ -103,5 +108,34 @@ target = NodePath("../Head")
 script = ExtResource("9_wf64i")
 target = NodePath("../Head")
 target_sprites = [NodePath("../Head/Face"), NodePath("../Head/FaceEye"), NodePath("../Head/FaceOutline")]
+
+[node name="BoostComponent" type="Node2D" parent="."]
+z_index = 1
+script = ExtResource("11_sdqco")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="BoostComponent"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_top = -30.0
+offset_right = 50.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 0
+max_value = 5.0
+step = 0.01
+value = 5.0
+texture_under = ExtResource("12_fth7c")
+texture_progress = ExtResource("13_lbwfd")
+
+[node name="BoostNotAvailable" type="Sprite2D" parent="BoostComponent/TextureProgressBar"]
+visible = false
+modulate = Color(1, 0, 0, 1)
+position = Vector2(50, 2.5)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("14_mjcwr")
 
 [connection signal="area_entered" from="Head/Area2D_Head" to="." method="_on_head_area2d_entered"]

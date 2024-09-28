@@ -10,6 +10,7 @@ signal on_player_reset_complete(peer_id: int, player: Player)
 @onready var marking_component: MarkingComponent = $MarkingComponent
 @onready var move_component: MoveComponent = $MoveComponent
 @onready var steering_component: SteeringComponent = $SteeringComponent
+@onready var boost_component: Node2D = $BoostComponent
 
 @export var steer_speed: float = 3.0
 @export var move_speed: float = 100.0
@@ -25,6 +26,7 @@ func _enter_tree() -> void:
 # 업데이트
 func _process(_delta: float) -> void:
 	name_tag_root.global_position = head.global_position + (Vector2.UP * 16)
+	boost_component.global_position = head.global_position + (Vector2.UP * 16)
 
 # 플레이어 초기화
 func initialize(player_data: Dictionary, state: Dictionary) -> void:
