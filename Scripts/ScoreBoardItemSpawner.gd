@@ -2,7 +2,9 @@
 extends MultiplayerSpawner
 
 const SCORE_BOARD_ITEM_TEMPLATE = preload("res://Scenes/Templates/score_board_item.tscn")
+const SCORE_FX_TEMPLATE = preload("res://Scenes/Templates/score_fx.tscn")
 @onready var container: VBoxContainer = $"../Container"
+@onready var players: Node = $"../../../Players"
 
 # 시작
 func _ready() -> void:
@@ -43,6 +45,16 @@ func get_results() -> Array[ScoreBoardItem]:
 	return score_items
 
 # 점수판 항목 제거
-func delete_scoreboard_item(peer_id) -> void:
+func delete_scoreboard_item(peer_id: int) -> void:
 	var del_item: ScoreBoardItem = container.get_node(str(peer_id))
 	del_item.queue_free.call_deferred()
+
+# 점수 습득 효과
+@rpc("any_peer", "call_local")
+func create_score_fx(peer_id: int, score: int) -> void:
+	var fx: ScoreFX = SCORE_FX_TEMPLATE.instantiate()
+	fx.set_score_text(score)
+	get_tree().root.add_child.call_deferred(fx)
+	
+	var player: Player = self.players.get_node(str(peer_id))
+	fx.global_position = player.head.global_position

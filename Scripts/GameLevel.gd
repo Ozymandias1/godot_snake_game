@@ -134,6 +134,7 @@ func _on_player_head_area2d_entered(peer_id: int, player: Player, other: Area2D)
 		if result.visible == false: # 결과창이 보이는 상태에서는 점수 증가를 하지 않음
 			self.scores[peer_id] += 1
 			self.score_board_item_spawner.set_score(peer_id, scores[peer_id])
+			self.score_board_item_spawner.create_score_fx.rpc_id(peer_id, peer_id, 1)
 	else:
 		player.reset.rpc()
 		# 충돌한 객체의 부모노드가 Body타입이라면 다른 플레이어의 몸체에 충돌한 것이므로
@@ -141,6 +142,7 @@ func _on_player_head_area2d_entered(peer_id: int, player: Player, other: Area2D)
 		if is_instance_of(other_player_body, Body):
 			self.scores[other_player_body.peer_id] += 5 # 충돌을 유발한 플레이어에게 5점 부여
 			self.score_board_item_spawner.set_score(other_player_body.peer_id, scores[other_player_body.peer_id])
+			self.score_board_item_spawner.create_score_fx.rpc_id(other_player_body.peer_id, other_player_body.peer_id, 5)
 			
 			var other_player = self.players.get_node(str(other_player_body.peer_id))
 			if other_player != null:
