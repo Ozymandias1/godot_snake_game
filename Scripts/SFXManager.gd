@@ -1,3 +1,4 @@
+# SFXManager.gd
 extends Node
 
 const CLICK_SFX = preload("res://Scenes/SFX/click.tscn")
